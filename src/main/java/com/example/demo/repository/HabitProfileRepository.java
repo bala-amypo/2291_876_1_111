@@ -1,5 +1,9 @@
 package com.example.demo.repository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import com.example.demo.entity.CompatibilityScoreRecord;
 
-public class HabitProfileRepository {
+public interface CompatibilityScoreRecordRepository extends JpaRepository<CompatibilityScoreRecord,Long> {
 
 }
+
+
