@@ -1,20 +1,26 @@
-package com.example.demo.model;
-import jakarta.persistence.*;
-
 import java.time.LocalDateTime;
 
+import jakarta.persistence.*;
+;
 
 @Entity
-public class RoomAssignmentRecord{
+@Table(name = "room_assignments")
+public class RoomAssignmentRecord {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String roomNumber;
+
     private Long studentAId;
-     private Long studentBId;
+
+    private Long studentBId;
+
     private LocalDateTime assignedAt;
 
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private RoomAssignmentStatus status;
 
     public Long getId() {
         return id;
@@ -75,7 +81,7 @@ public class RoomAssignmentRecord{
     }
 
     public RoomAssignmentRecord() {
-
     }
 
+    
 }
