@@ -22,12 +22,9 @@ public class MatchAttemptRecord {
 
     private Long candidateStudentId;
 
-    @OneToOne
-    @JoinColumn(name = "score_record_id")
-    private CompatibilityScoreRecord resultScoreRecord;
+    private Long resultScoreRecord;
 
-    @Enumerated(EnumType.STRING)
-    private MatchStatus status;
+    private String status;
 
     private LocalDateTime attemptedAt;
 
@@ -55,19 +52,19 @@ public class MatchAttemptRecord {
         this.candidateStudentId = candidateStudentId;
     }
 
-    public CompatibilityScoreRecord getResultScoreRecord() {
+    public Long getResultScoreRecord() {
         return resultScoreRecord;
     }
 
-    public void setResultScoreRecord(CompatibilityScoreRecord resultScoreRecord) {
+    public void setResultScoreRecord(Long resultScoreRecord) {
         this.resultScoreRecord = resultScoreRecord;
     }
 
-    public MatchStatus getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(MatchStatus status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
@@ -79,8 +76,8 @@ public class MatchAttemptRecord {
         this.attemptedAt = attemptedAt;
     }
 
-    public MatchAttemptRecord(Long id, Long initiatorStudentId, Long candidateStudentId,
-            CompatibilityScoreRecord resultScoreRecord, MatchStatus status, LocalDateTime attemptedAt) {
+    public MatchAttemptRecord(Long id, Long initiatorStudentId, Long candidateStudentId, Long resultScoreRecord,
+            String status, LocalDateTime attemptedAt) {
         this.id = id;
         this.initiatorStudentId = initiatorStudentId;
         this.candidateStudentId = candidateStudentId;
@@ -89,8 +86,7 @@ public class MatchAttemptRecord {
         this.attemptedAt = attemptedAt;
     }
 
+    
     public MatchAttemptRecord() {
     }
-
-    
 }
