@@ -1,17 +1,11 @@
-package com.example.demo.model;
-
-import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 import org.springframework.beans.factory.config.YamlProcessor.MatchStatus;
 
+import jakarta.persistence.*;
+
 @Entity
-@Table(
-    name = "match_attempt_record",
-    uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"initiatorStudentId", "candidateStudentId"})
-    }
-)
+@Table(name = "match_attempts")
 public class MatchAttemptRecord {
 
     @Id
@@ -22,9 +16,10 @@ public class MatchAttemptRecord {
 
     private Long candidateStudentId;
 
-    private Long resultScoreRecord;
+    private Long resultScoreId;
 
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private MatchStatus status;
 
     private LocalDateTime attemptedAt;
 
@@ -52,19 +47,19 @@ public class MatchAttemptRecord {
         this.candidateStudentId = candidateStudentId;
     }
 
-    public Long getResultScoreRecord() {
-        return resultScoreRecord;
+    public Long getResultScoreId() {
+        return resultScoreId;
     }
 
-    public void setResultScoreRecord(Long resultScoreRecord) {
-        this.resultScoreRecord = resultScoreRecord;
+    public void setResultScoreId(Long resultScoreId) {
+        this.resultScoreId = resultScoreId;
     }
 
-    public String getStatus() {
+    public MatchStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(MatchStatus status) {
         this.status = status;
     }
 
@@ -76,17 +71,18 @@ public class MatchAttemptRecord {
         this.attemptedAt = attemptedAt;
     }
 
-    public MatchAttemptRecord(Long id, Long initiatorStudentId, Long candidateStudentId, Long resultScoreRecord,
-            String status, LocalDateTime attemptedAt) {
+    public MatchAttemptRecord(Long id, Long initiatorStudentId, Long candidateStudentId, Long resultScoreId,
+            MatchStatus status, LocalDateTime attemptedAt) {
         this.id = id;
         this.initiatorStudentId = initiatorStudentId;
         this.candidateStudentId = candidateStudentId;
-        this.resultScoreRecord = resultScoreRecord;
+        this.resultScoreId = resultScoreId;
         this.status = status;
         this.attemptedAt = attemptedAt;
     }
 
-    
     public MatchAttemptRecord() {
     }
+    
+
 }
