@@ -1,5 +1,5 @@
 package com.example.demo.model.enums;
 
-public enums NoiseTolerance {
+public enums Compati {
     LOW,MEDIUM, HIGH
 }

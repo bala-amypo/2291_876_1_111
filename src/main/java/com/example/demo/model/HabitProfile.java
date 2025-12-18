@@ -1,27 +1,31 @@
-package com.example.demo.model;
-
-import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
+import jakarta.persistence.*;
+
 @Entity
-@Table(name = "habit_profile")
+@Table(name = "habit_profiles")
 public class HabitProfile {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String studentId;
 
-    private String sleepSchedule;
+    @Column(nullable = false)
+    private Long studentId;
+
+    @Enumerated(EnumType.STRING)
+    private SleepSchedule sleepSchedule;
 
     private Integer studyHoursPerDay;
 
-    private String cleanlinessLevel;
+    @Enumerated(EnumType.STRING)
+    private CleanlinessLevel cleanlinessLevel;
 
-    private String noiseTolerance;
+    @Enumerated(EnumType.STRING)
+    private NoiseTolerance noiseTolerance;
 
-  
-    private String socialPreference;
+    @Enumerated(EnumType.STRING)
+    private SocialPreference socialPreference;
 
     private LocalDateTime updatedAt;
 
@@ -33,19 +37,19 @@ public class HabitProfile {
         this.id = id;
     }
 
-    public String getStudentId() {
+    public Long getStudentId() {
         return studentId;
     }
 
-    public void setStudentId(String studentId) {
+    public void setStudentId(Long studentId) {
         this.studentId = studentId;
     }
 
-    public String getSleepSchedule() {
+    public SleepSchedule getSleepSchedule() {
         return sleepSchedule;
     }
 
-    public void setSleepSchedule(String sleepSchedule) {
+    public void setSleepSchedule(SleepSchedule sleepSchedule) {
         this.sleepSchedule = sleepSchedule;
     }
 
@@ -57,27 +61,27 @@ public class HabitProfile {
         this.studyHoursPerDay = studyHoursPerDay;
     }
 
-    public String getCleanlinessLevel() {
+    public CleanlinessLevel getCleanlinessLevel() {
         return cleanlinessLevel;
     }
 
-    public void setCleanlinessLevel(String cleanlinessLevel) {
+    public void setCleanlinessLevel(CleanlinessLevel cleanlinessLevel) {
         this.cleanlinessLevel = cleanlinessLevel;
     }
 
-    public String getNoiseTolerance() {
+    public NoiseTolerance getNoiseTolerance() {
         return noiseTolerance;
     }
 
-    public void setNoiseTolerance(String noiseTolerance) {
+    public void setNoiseTolerance(NoiseTolerance noiseTolerance) {
         this.noiseTolerance = noiseTolerance;
     }
 
-    public String getSocialPreference() {
+    public SocialPreference getSocialPreference() {
         return socialPreference;
     }
 
-    public void setSocialPreference(String socialPreference) {
+    public void setSocialPreference(SocialPreference socialPreference) {
         this.socialPreference = socialPreference;
     }
 
@@ -89,8 +93,9 @@ public class HabitProfile {
         this.updatedAt = updatedAt;
     }
 
-    public HabitProfile(Long id, String studentId, String sleepSchedule, Integer studyHoursPerDay,
-            String cleanlinessLevel, String noiseTolerance, String socialPreference, LocalDateTime updatedAt) {
+    public HabitProfile(Long id, Long studentId, SleepSchedule sleepSchedule, Integer studyHoursPerDay,
+            CleanlinessLevel cleanlinessLevel, NoiseTolerance noiseTolerance, SocialPreference socialPreference,
+            LocalDateTime updatedAt) {
         this.id = id;
         this.studentId = studentId;
         this.sleepSchedule = sleepSchedule;
@@ -101,8 +106,8 @@ public class HabitProfile {
         this.updatedAt = updatedAt;
     }
 
-}
-
     public HabitProfile() {
-
     }
+    
+    
+}4e3
