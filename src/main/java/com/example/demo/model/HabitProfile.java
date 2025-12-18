@@ -1,5 +1,8 @@
 import java.time.LocalDateTime;
-
+import com.example.demo.model.enums.SleepSchedule;
+import com.example.demo.model.enums.CleanlinessLevel;
+import com.example.demo.model.enums.NoiseTolerance;
+import com.example.demo.model.enums.SocialPreference;
 import jakarta.persistence.*;
 
 @Entity

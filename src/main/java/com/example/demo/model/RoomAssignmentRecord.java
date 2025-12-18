@@ -1,7 +1,7 @@
 import java.time.LocalDateTime;
 
 import jakarta.persistence.*;
-;
+import com.example.demo.model.enums.RoomAssignmentStatus;
 
 @Entity
 @Table(name = "room_assignments")
