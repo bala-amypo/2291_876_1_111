@@ -8,7 +8,7 @@ import com.example.demo.repository.HabitProfileRepository;
 import com.example.demo.service.HabitProfileService;
 
 @Service
-public class HabitProfileServiceImpl implements HabitProfileService {
+public class HabitProfileServiceImplement implements HabitProfileService {
 
     private final HabitProfileRepository repository;
 
