@@ -1,5 +1,5 @@
 package com.example.demo.service.implement;
 
-public class StudentProfileServiceImplement {
+public class HabitprofileServiceImplement {
     
 }
