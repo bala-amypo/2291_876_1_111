@@ -12,29 +12,18 @@ public class HabitProfile {
     private Long id;
     private String studentId;
 
-    private SleepSchedule sleepSchedule;
+    private String sleepSchedule;
 
     private Integer studyHoursPerDay;
 
-    @Enumerated(EnumType.STRING)
-    private Level cleanlinessLevel;
+    private String cleanlinessLevel;
 
-    @Enumerated(EnumType.STRING)
-    private Level noiseTolerance;
+    private String noiseTolerance;
 
-    @Enumerated(EnumType.STRING)
-    private SocialPreference socialPreference;
+  
+    private String socialPreference;
 
     private LocalDateTime updatedAt;
-
-    @PrePersist
-    @PreUpdate
-    public void validateAndUpdate() {
-        if (studyHoursPerDay != null && studyHoursPerDay < 0) {
-            throw new IllegalArgumentException("study hours must be >= 0");
-        }
-        this.updatedAt = LocalDateTime.now();
-    }
 
     public Long getId() {
         return id;
@@ -44,19 +33,19 @@ public class HabitProfile {
         this.id = id;
     }
 
-    public Long getStudentId() {
+    public String getStudentId() {
         return studentId;
     }
 
-    public void setStudentId(Long studentId) {
+    public void setStudentId(String studentId) {
         this.studentId = studentId;
     }
 
-    public SleepSchedule getSleepSchedule() {
+    public String getSleepSchedule() {
         return sleepSchedule;
     }
 
-    public void setSleepSchedule(SleepSchedule sleepSchedule) {
+    public void setSleepSchedule(String sleepSchedule) {
         this.sleepSchedule = sleepSchedule;
     }
 
@@ -68,27 +57,27 @@ public class HabitProfile {
         this.studyHoursPerDay = studyHoursPerDay;
     }
 
-    public Level getCleanlinessLevel() {
+    public String getCleanlinessLevel() {
         return cleanlinessLevel;
     }
 
-    public void setCleanlinessLevel(Level cleanlinessLevel) {
+    public void setCleanlinessLevel(String cleanlinessLevel) {
         this.cleanlinessLevel = cleanlinessLevel;
     }
 
-    public Level getNoiseTolerance() {
+    public String getNoiseTolerance() {
         return noiseTolerance;
     }
 
-    public void setNoiseTolerance(Level noiseTolerance) {
+    public void setNoiseTolerance(String noiseTolerance) {
         this.noiseTolerance = noiseTolerance;
     }
 
-    public SocialPreference getSocialPreference() {
+    public String getSocialPreference() {
         return socialPreference;
     }
 
-    public void setSocialPreference(SocialPreference socialPreference) {
+    public void setSocialPreference(String socialPreference) {
         this.socialPreference = socialPreference;
     }
 
@@ -100,8 +89,8 @@ public class HabitProfile {
         this.updatedAt = updatedAt;
     }
 
-    public HabitProfile(Long id, Long studentId, SleepSchedule sleepSchedule, Integer studyHoursPerDay,
-            Level cleanlinessLevel, Level noiseTolerance, SocialPreference socialPreference, LocalDateTime updatedAt) {
+    public HabitProfile(Long id, String studentId, String sleepSchedule, Integer studyHoursPerDay,
+            String cleanlinessLevel, String noiseTolerance, String socialPreference, LocalDateTime updatedAt) {
         this.id = id;
         this.studentId = studentId;
         this.sleepSchedule = sleepSchedule;
@@ -112,8 +101,8 @@ public class HabitProfile {
         this.updatedAt = updatedAt;
     }
 
-    public HabitProfile() {
-    }
-    
-
 }
+
+    public HabitProfile() {
+
+    }

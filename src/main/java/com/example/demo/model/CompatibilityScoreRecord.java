@@ -20,19 +20,11 @@ public class CompatibilityScoreRecord {
     private Double score;
 
  
-    private CompatibilityLevel compatibilityLevel;
+    private String compatibilityLevel;
 
     private LocalDateTime computedAt;
 
     private String detailsJson;
-
-    @PrePersist
-    public void onCompute() {
-        if (studentAId.equals(studentBId)) {
-            throw new IllegalArgumentException("Cannot match same student");
-        }
-        this.computedAt = LocalDateTime.now();
-    }
 
     public Long getId() {
         return id;
@@ -66,11 +58,11 @@ public class CompatibilityScoreRecord {
         this.score = score;
     }
 
-    public CompatibilityLevel getCompatibilityLevel() {
+    public String getCompatibilityLevel() {
         return compatibilityLevel;
     }
 
-    public void setCompatibilityLevel(CompatibilityLevel compatibilityLevel) {
+    public void setCompatibilityLevel(String compatibilityLevel) {
         this.compatibilityLevel = compatibilityLevel;
     }
 
@@ -90,8 +82,8 @@ public class CompatibilityScoreRecord {
         this.detailsJson = detailsJson;
     }
 
-    public CompatibilityScoreRecord(Long id, Long studentAId, Long studentBId, Double score,
-            CompatibilityLevel compatibilityLevel, LocalDateTime computedAt, String detailsJson) {
+    public CompatibilityScoreRecord(Long id, Long studentAId, Long studentBId, Double score, String compatibilityLevel,
+            LocalDateTime computedAt, String detailsJson) {
         this.id = id;
         this.studentAId = studentAId;
         this.studentBId = studentBId;
@@ -100,10 +92,9 @@ public class CompatibilityScoreRecord {
         this.computedAt = computedAt;
         this.detailsJson = detailsJson;
     }
-
     public CompatibilityScoreRecord() {
+
     }
-    
+
 }
 
-    
