@@ -1,4 +1,4 @@
-package com.example.demo.model.enums;
+package com.example.demo.model.enum;
 
 public enum SleepSchedule {
     EARLY_SLEEPER,
