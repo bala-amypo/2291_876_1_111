@@ -1,14 +1,14 @@
 package com.example.demo.model;
+import java.time.LocalDateTime;
 
 import jakarta.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
 @Table(
-    name = "student_profile",
+    name = "student_profiles",
     uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"studentId"}),
-        @UniqueConstraint(columnNames = {"email"})
+        @UniqueConstraint(columnNames = "studentId"),
+        @UniqueConstraint(columnNames = "email")
     }
 )
 public class StudentProfile {
@@ -17,12 +17,11 @@ public class StudentProfile {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column( unique = true)
+    @Column(nullable = false)
     private String studentId;
 
     private String fullName;
 
-    @Column( unique = true)
     private String email;
 
     private String department;
@@ -32,11 +31,6 @@ public class StudentProfile {
     private Boolean active;
 
     private LocalDateTime createdAt;
-
-    @PrePersist
-    public void onCreate() {
-        this.createdAt = LocalDateTime.now();
-    }
 
     public Long getId() {
         return id;
@@ -116,5 +110,7 @@ public class StudentProfile {
 
     public StudentProfile() {
     }
+
+    
     
 }
