@@ -14,8 +14,7 @@ public class RoomAssignmentRecord{
      private Long studentBId;
     private LocalDateTime assignedAt;
 
-    @Enumerated(EnumType.STRING)
-    private RoomAssignmentStatus status;
+    private String status;
 
     public Long getId() {
         return id;
