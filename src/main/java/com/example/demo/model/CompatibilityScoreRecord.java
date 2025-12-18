@@ -1,9 +1,14 @@
-import jakarta.persistence.*;
+package com.example.demo.model;
+
 import java.time.LocalDateTime;
+
+import com.example.demo.model.enums.CompatibilityLevel;
+
+import jakarta.persistence.*;
 
 @Entity
 @Table(
-    name = "compatibility_score",
+    name = "compatibility_scores",
     uniqueConstraints = {
         @UniqueConstraint(columnNames = {"studentAId", "studentBId"})
     }
@@ -15,15 +20,17 @@ public class CompatibilityScoreRecord {
     private Long id;
 
     private Long studentAId;
+
     private Long studentBId;
 
     private Double score;
 
- 
-    private String compatibilityLevel;
+    @Enumerated(EnumType.STRING)
+    private CompatibilityLevel compatibilityLevel;
 
     private LocalDateTime computedAt;
 
+    @Column(columnDefinition = "TEXT")
     private String detailsJson;
 
     public Long getId() {
@@ -58,11 +65,11 @@ public class CompatibilityScoreRecord {
         this.score = score;
     }
 
-    public String getCompatibilityLevel() {
+    public CompatibilityLevel getCompatibilityLevel() {
         return compatibilityLevel;
     }
 
-    public void setCompatibilityLevel(String compatibilityLevel) {
+    public void setCompatibilityLevel(CompatibilityLevel compatibilityLevel) {
         this.compatibilityLevel = compatibilityLevel;
     }
 
@@ -82,8 +89,8 @@ public class CompatibilityScoreRecord {
         this.detailsJson = detailsJson;
     }
 
-    public CompatibilityScoreRecord(Long id, Long studentAId, Long studentBId, Double score, String compatibilityLevel,
-            LocalDateTime computedAt, String detailsJson) {
+    public CompatibilityScoreRecord(Long id, Long studentAId, Long studentBId, Double score,
+            CompatibilityLevel compatibilityLevel, LocalDateTime computedAt, String detailsJson) {
         this.id = id;
         this.studentAId = studentAId;
         this.studentBId = studentBId;
@@ -92,8 +99,9 @@ public class CompatibilityScoreRecord {
         this.computedAt = computedAt;
         this.detailsJson = detailsJson;
     }
+
     public CompatibilityScoreRecord() {
-
     }
-
+    
+    
 }
