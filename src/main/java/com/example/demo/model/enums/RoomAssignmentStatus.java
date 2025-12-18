@@ -1,5 +1,5 @@
 package com.example.demo.model.enums;
 
-public enums RoomAssignmentStatus {
+public enum RoomAssignmentStatus {
     ACTIVE,COMPLETED,CANCELLED
 }

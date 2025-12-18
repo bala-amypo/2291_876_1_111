@@ -1,5 +1,5 @@
 package com.example.demo.model.enums;
 
-public enums CompatibilityLevel {
+public enum CompatibilityLevel {
     LOW,MEDIUM, HIGH,EXCELLENT
 }
