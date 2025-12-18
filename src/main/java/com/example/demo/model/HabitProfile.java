@@ -10,11 +10,8 @@ public class HabitProfile {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String studentId;
 
-    @Column(nullable = false)
-    private Long studentId;
-
-    @Enumerated(EnumType.STRING)
     private SleepSchedule sleepSchedule;
 
     private Integer studyHoursPerDay;

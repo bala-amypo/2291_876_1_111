@@ -19,7 +19,7 @@ public class CompatibilityScoreRecord {
 
     private Double score;
 
-    @Enumerated(EnumType.STRING)
+ 
     private CompatibilityLevel compatibilityLevel;
 
     private LocalDateTime computedAt;
