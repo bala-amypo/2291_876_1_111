@@ -11,5 +11,5 @@ public class RoomAssignmentRecord{
     private LocalDateTime assignedAt;
 
     @Enumerated(EnumType.STRING)
-    private RoomAssignment
+    private RoomAssignmentStatus status;
 }
