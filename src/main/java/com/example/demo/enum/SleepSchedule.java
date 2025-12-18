@@ -1,3 +1,3 @@
 public enum SleepSchedule{
-    EARLY,
+    EARLY,REGULAR,LATE
 }
