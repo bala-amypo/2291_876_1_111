@@ -1,5 +1,8 @@
 package com.example.demo.service;
 
-public class CompatibilityScoreService{
-    
+import com.example.demo.model.CompatibilityScoreRecord;
+
+public interface CompatibilityScoreService {
+
+    CompatibilityScoreRecord computeScore(CompatibilityScoreRecord record);
 }
