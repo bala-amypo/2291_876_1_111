@@ -1,5 +1,8 @@
 package com.example.demo.service;
 
-public class HabitProfileService {
-    
+import com.example.demo.model.HabitProfile;
+
+public interface HabitProfileService {
+
+    HabitProfile saveHabitProfile(HabitProfile habitProfile);
 }

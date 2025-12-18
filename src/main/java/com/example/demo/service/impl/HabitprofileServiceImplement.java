@@ -2,8 +2,7 @@ package com.example.demo.service.impl;
 
 import org.springframework.stereotype.Service;
 
-import com.example.demo.entity.HabitProfile;
-import com.example.demo.exception.InvalidStudyHoursException;
+import com.example.demo.model.HabitProfile;
 import com.example.demo.repository.HabitProfileRepository;
 import com.example.demo.service.HabitProfileService;
 
@@ -12,7 +11,7 @@ public class HabitProfileServiceImplement implements HabitProfileService {
 
     private final HabitProfileRepository repository;
 
-    public HabitProfileServiceImpl(HabitProfileRepository repository) {
+    public HabitProfileServiceImplement(HabitProfileRepository repository) {
         this.repository = repository;
     }
 
@@ -21,7 +20,7 @@ public class HabitProfileServiceImplement implements HabitProfileService {
 
         if (habitProfile.getStudyHoursPerDay() == null
                 || habitProfile.getStudyHoursPerDay() < 0) {
-            throw new InvalidStudyHoursException("study hours invalid");
+            throw new RuntimeException("study hours invalid");
         }
 
         return repository.save(habitProfile);
