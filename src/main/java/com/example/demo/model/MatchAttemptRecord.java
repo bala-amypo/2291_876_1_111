@@ -1,3 +1,4 @@
+package com.example.demo.model;
 import java.time.LocalDateTime;
 
 import org.springframework.beans.factory.config.YamlProcessor.MatchStatus;

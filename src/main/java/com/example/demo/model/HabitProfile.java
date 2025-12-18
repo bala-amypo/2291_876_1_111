@@ -1,3 +1,4 @@
+package com.example.demo.model;
 import java.time.LocalDateTime;
 import com.example.demo.model.enums.SleepSchedule;
 import com.example.demo.model.enums.CleanlinessLevel;
