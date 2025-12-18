@@ -1,4 +1,5 @@
 public enum MatchStatus{
     MATCHED,
-    NOT_COMP
+    NOT_COMPATIBLE,
+    PENDING_REVIEW
 }
