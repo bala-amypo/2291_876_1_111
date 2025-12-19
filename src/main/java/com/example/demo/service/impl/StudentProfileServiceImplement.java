@@ -13,43 +13,44 @@ public class StudentProfileServiceImpl implements StudentProfileService {
 
     private final StudentProfileRepository repository;
 
-    public StudentProfileServiceImpl(StudentProfileRepository repository) {
-        this.repository = repository;
-    }
+        public StudentProfileServiceImpl(StudentProfileRepository repository) {
+                this.repository = repository;
+                    }
 
-    @Override
-    public StudentProfile createStudent(StudentProfile profile) {
+                        @Override
+                            public StudentProfile createStudent(StudentProfile profile) {
 
-        if (repository.findByStudentId(profile.getStudentId()).isPresent()) {
-            throw new IllegalArgumentException("studentId exists");
-        }
+                                    if (repository.findByStudentId(profile.getStudentId()).isPresent()) {
+                                                throw new IllegalArgumentException("studentId exists");
+                                                        }
 
-        return repository.save(profile);
-    }
+                                                                return repository.save(profile);
+                                                                    }
 
-    @Override
-    public StudentProfile getStudentById(Long id) {
-        return repository.findById(id)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException("not found"));
-    }
+                                                                        @Override
+                                                                            public StudentProfile getStudentById(Long id) {
+                                                                                    return repository.findById(id)
+                                                                                                    .orElseThrow(() ->
+                                                                                                                            new ResourceNotFoundException("not found"));
+                                                                                                                                }
 
-    @Override
-    public List<StudentProfile> getAllStudents() {
-        return repository.findAll();
-    }
+                                                                                                                                    @Override
+                                                                                                                                        public List<StudentProfile> getAllStudents() {
+                                                                                                                                                return repository.findAll();
+                                                                                                                                                    }
 
-    @Override
-    public StudentProfile findByStudentId(String studentId) {
-        return repository.findByStudentId(studentId)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException("not found"));
-    }
+                                                                                                                                                        @Override
+                                                                                                                                                            public StudentProfile findByStudentId(String studentId) {
+                                                                                                                                                                    return repository.findByStudentId(studentId)
+                                                                                                                                                                                    .orElseThrow(() ->
+                                                                                                                                                                                                            new ResourceNotFoundException("not found"));
+                                                                                                                                                                                                                }
 
-    @Override
-    public StudentProfile updateStudentStatus(Long id, boolean active) {
-        StudentProfile student = getStudentById(id);
-        student.setActive(active);
-        return repository.save(student);
-    }
-}
+                                                                                                                                                                                                                    @Override
+                                                                                                                                                                                                                        public StudentProfile updateStudentStatus(Long id, boolean active) {
+                                                                                                                                                                                                                                StudentProfile student = getStudentById(id);
+                                                                                                                                                                                                                                        student.setActive(active);
+                                                                                                                                                                                                                                                return repository.save(student);
+                                                                                                                                                                                                                                                    }
+                                                                                                                                                                                                                                                    }
+                                                                                                                                                                                                                                                    
