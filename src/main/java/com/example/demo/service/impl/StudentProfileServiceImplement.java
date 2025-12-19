@@ -8,11 +8,11 @@ import com.example.demo.repository.StudentProfileRepository;
 import com.example.demo.service.StudentProfileService;
 
 @Service
-public class StudentProfileServiceImpl implements StudentProfileService {
+public class StudentProfileServiceImplement implements StudentProfileService {
 
     private final StudentProfileRepository repository;
 
-    public StudentProfileServiceImpl(StudentProfileRepository repository) {
+    public StudentProfileServiceImplement(StudentProfileRepository repository) {
         this.repository = repository;
     }
 
