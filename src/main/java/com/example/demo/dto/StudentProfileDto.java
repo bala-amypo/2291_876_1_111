@@ -6,12 +6,12 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class HabitProfileDto {
+public class StudentProfileDto {
     private Long id;
-    private Long studentId;
-    private String sleepSchedule;
-    private Integer studyHoursPerDay;
-    private String cleanlinessLevel;
-    private String noiseTolerance;
-    private String socialPreference;
+    private String studentId;
+    private String fullName;
+    private String email;
+    private String department;
+    private Integer yearLevel;
+    private Boolean active;
 }
