@@ -39,11 +39,3 @@ enum AssignmentStatus {
     ACTIVE, COMPLETED, CANCELLED
 }
 
-// ======================== SECURITY LAYER ========================
-
-// Role.java (com.example.demo.security)
-package com.example.demo.security;
-
-public enum Role {
-    USER, ADMIN
-}
