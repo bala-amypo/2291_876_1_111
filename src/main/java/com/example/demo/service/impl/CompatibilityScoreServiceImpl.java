@@ -85,7 +85,7 @@ public class CompatibilityScoreServiceImpl implements CompatibilityScoreService 
         return Math.max(0, Math.min(100, score));
     }
 
-    private CompatibilityLevel determineLevel(double score) {
+    public CompatibilityLevel determineLevel(double score) {
         if (score >= 80) return CompatibilityLevel.EXCELLENT;
         if (score >= 60) return CompatibilityLevel.HIGH;
         if (score >= 40) return CompatibilityLevel.MEDIUM;
