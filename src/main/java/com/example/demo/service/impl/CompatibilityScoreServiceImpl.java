@@ -86,13 +86,13 @@ public class CompatibilityScoreServiceImpl implements CompatibilityScoreService 
     }
 
     public CompatibilityScoreRecord.CompatibilityLevel determineLevel(double score) {
-    if (score >= 80) return CompatibilityScoreRecord.CompatibilityLevel.EXCELLENT;
-    if (score >= 60) return CompatibilityScoreRecord.CompatibilityLevel.HIGH;
-    if (score >= 40) return CompatibilityScoreRecord.CompatibilityLevel.MEDIUM;
-    return CompatibilityScoreRecord.CompatibilityLevel.LOW;
-}
+        if (score >= 80) return CompatibilityScoreRecord.CompatibilityLevel.EXCELLENT;
+        if (score >= 60) return CompatibilityScoreRecord.CompatibilityLevel.HIGH;
+        if (score >= 40) return CompatibilityScoreRecord.CompatibilityLevel.MEDIUM;
+        return CompatibilityScoreRecord.CompatibilityLevel.LOW;
+    }
 
-}
+
 
 
     @Override
