@@ -38,6 +38,6 @@ public class CompatibilityScoreRecord {
     }
 }
 
-public static enum CompatibilityLevel {
+enum CompatibilityLevel {
     LOW, MEDIUM, HIGH, EXCELLENT
 }
