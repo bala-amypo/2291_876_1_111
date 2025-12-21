@@ -1,3 +1,3 @@
-public class CustomerUserDetailsService{
+public class CustomUserDetailsService{
     
 }
