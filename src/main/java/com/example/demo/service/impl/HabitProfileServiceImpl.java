@@ -1,69 +1,47 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.dto.HabitProfileDto;
-import com.example.demo.exception.ResourceNotFoundException;
-import com.example.demo.model.*;
+import com.example.demo.model.HabitProfile;
 import com.example.demo.repository.HabitProfileRepository;
-import com.example.demo.repository.StudentProfileRepository;
 import com.example.demo.service.HabitProfileService;
+import com.example.demo.exception.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
-
+import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
+@Transactional
 public class HabitProfileServiceImpl implements HabitProfileService {
-    private final HabitProfileRepository repository;
-    private final StudentProfileRepository studentRepository;
-    
-    public HabitProfileServiceImpl(HabitProfileRepository repository, 
-                                   StudentProfileRepository studentRepository) {
-        this.repository = repository;
-        this.studentRepository = studentRepository;
+
+    private final HabitProfileRepository repo;
+
+    public HabitProfileServiceImpl(HabitProfileRepository repo) {
+        this.repo = repo;
     }
-    
+
     @Override
-    public HabitProfile createOrUpdateHabit(HabitProfileDto dto) {
-        if (!studentRepository.existsById(dto.getStudentId())) {
-            throw new ResourceNotFoundException("Student not found");
+    public HabitProfile createOrUpdateHabit(HabitProfile habit) {
+        // Use the correct getter
+        Integer studyHours = habit.getStudyHoursPerDay();
+        if (studyHours == null || studyHours < 0 || studyHours > 24) {
+            throw new IllegalArgumentException("Study hours must be between 0 and 24");
         }
-        
-        if (dto.getStudyHoursPerDay() < 0) {
-            throw new IllegalArgumentException("study hours must be >= 0");
-        }
-        
-        var existing = repository.findByStudentId(dto.getStudentId());
-        
-        HabitProfile profile;
-        if (existing.isPresent()) {
-            profile = existing.get();
-        } else {
-            profile = new HabitProfile();
-            profile.setStudentId(dto.getStudentId());
-        }
-        
-        profile.setSleepSchedule(SleepSchedule.valueOf(dto.getSleepSchedule()));
-        profile.setStudyHoursPerDay(dto.getStudyHoursPerDay());
-        profile.setCleanlinessLevel(CleanlinessLevel.valueOf(dto.getCleanlinessLevel()));
-        profile.setNoiseTolerance(NoiseTolerance.valueOf(dto.getNoiseTolerance()));
-        profile.setSocialPreference(SocialPreference.valueOf(dto.getSocialPreference()));
-        
-        return repository.save(profile);
+        return repo.save(habit);
     }
-    
+
     @Override
     public HabitProfile getHabitByStudent(Long studentId) {
-        return repository.findByStudentId(studentId)
-                .orElseThrow(() -> new ResourceNotFoundException("Habit not found"));
+        return repo.findByStudentId(studentId)
+            .orElseThrow(() -> new ResourceNotFoundException("Habit profile not found"));
     }
-    
-    @Override
-    public List<HabitProfile> getAllHabitProfiles() {
-        return repository.findAll();
-    }
-    
+
     @Override
     public HabitProfile getHabitById(Long id) {
-        return repository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Habit not found"));
+        return repo.findById(id)
+            .orElseThrow(() -> new ResourceNotFoundException("Habit profile not found"));
+    }
+
+    @Override
+    public List<HabitProfile> getAllHabitProfiles() {
+        return repo.findAll();
     }
 }
