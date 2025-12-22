@@ -5,6 +5,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Column;
 import java.time.LocalDateTime;
+import jakarta.validation.constraints.Email;
+
 
 @Entity
 public class StudentProfile{
@@ -18,6 +20,7 @@ public class StudentProfile{
     private String  fullName;
 
     @Column(unique=true)
+    @Email(message = "Invalid email format")
     private String email;
 
     private String department;
