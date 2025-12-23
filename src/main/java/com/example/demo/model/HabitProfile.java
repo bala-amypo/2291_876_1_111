@@ -1,9 +1,9 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 
 import java.time.LocalTime;
 
@@ -14,17 +14,15 @@ import java.time.LocalTime;
 @AllArgsConstructor
 public class HabitProfile {
 
-    // ===== ENUMS (TEST REQUIRES THESE EXACT NAMES) =====
     public enum CleanlinessLevel { LOW, MEDIUM, HIGH }
-    public enum NoiseTolerance { LOW, BALANCED, HIGH }
-    public enum SleepSchedule { EARLY, NIGHT, FLEXIBLE }
+    public enum NoiseTolerance { LOW, MEDIUM, BALANCED, HIGH }
+    public enum SleepSchedule { EARLY, REGULAR, LATE }
     public enum SocialPreference { INTROVERT, AMBIVERT, EXTROVERT }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // 🔴 TEST USES THIS (NOT StudentProfile)
     private Long studentId;
 
     private Boolean smoking;

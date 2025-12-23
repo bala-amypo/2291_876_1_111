@@ -1,3 +1,12 @@
+package com.example.demo.model;
+
+import jakarta.persistence.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
+
+import java.time.LocalTime;
+
 @Entity
 @Table(name = "student_profiles")
 @Data
@@ -9,7 +18,7 @@ public class StudentProfile {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // OPTIONAL – tests don't depend on this
+    // OPTIONAL (tests do NOT require user account)
     @OneToOne
     @JoinColumn(name = "user_account_id")
     private UserAccount userAccount;
