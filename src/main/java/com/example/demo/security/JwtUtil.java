@@ -6,6 +6,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+
 import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
@@ -24,14 +25,28 @@ public class JwtUtil {
         return Keys.hmacShaKeyFor(secret.getBytes());
     }
 
+    // ✅ REQUIRED BY TESTS (3 params)
     public String generateToken(String email, String role, Long userId) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("role", role);
         claims.put("userId", userId);
 
+        return buildToken(claims, email);
+    }
+
+    // ✅ REQUIRED BY TESTS (4 params)
+    public String generateToken(String email, String role, String userId, String ignored) {
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("role", role);
+        claims.put("userId", Long.parseLong(userId));
+
+        return buildToken(claims, email);
+    }
+
+    private String buildToken(Map<String, Object> claims, String subject) {
         return Jwts.builder()
                 .setClaims(claims)
-                .setSubject(email)
+                .setSubject(subject)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + expiration))
                 .signWith(getSigningKey(), SignatureAlgorithm.HS256)
@@ -60,6 +75,16 @@ public class JwtUtil {
             return ((Integer) userId).longValue();
         }
         return (Long) userId;
+    }
+
+    // ✅ REQUIRED BY TESTS
+    public boolean validate(String token) {
+        try {
+            extractClaims(token);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     public boolean isTokenValid(String token, String email) {
