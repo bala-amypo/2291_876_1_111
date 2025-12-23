@@ -3,51 +3,59 @@ package com.example.demo.controller;
 import com.example.demo.dto.StudentProfileDto;
 import com.example.demo.model.StudentProfile;
 import com.example.demo.service.StudentProfileService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/students")
 @Tag(name = "Student Profiles", description = "Student profile management")
-@RequiredArgsConstructor
 public class StudentProfileController {
+
     private final StudentProfileService studentProfileService;
 
+    public StudentProfileController(StudentProfileService studentProfileService) {
+        this.studentProfileService = studentProfileService;
+    }
+
     @PostMapping
-    public ResponseEntity<StudentProfile> createStudent(@RequestBody StudentProfileDto dto) {
-        StudentProfile profile = new StudentProfile();
-        profile.setStudentId(dto.getStudentId());
-        profile.setFullName(dto.getFullName());
-        profile.setEmail(dto.getEmail());
-        profile.setDepartment(dto.getDepartment());
-        profile.setYearLevel(dto.getYearLevel());
-        profile.setActive(dto.isActive());  // FIXED: Simple boolean assignment
-        return ResponseEntity.ok(studentProfileService.createStudent(profile));
+    @Operation(summary = "Create student profile")
+    public ResponseEntity<StudentProfile> createProfile(@RequestBody StudentProfileDto dto, 
+                                                        @RequestParam Long userId) {
+        return ResponseEntity.ok(studentProfileService.createProfile(dto, userId));
+    }
+
+    @PutMapping("/{id}")
+    @Operation(summary = "Update student profile")
+    public ResponseEntity<StudentProfile> updateProfile(@PathVariable Long id, 
+                                                        @RequestBody StudentProfileDto dto) {
+        return ResponseEntity.ok(studentProfileService.updateProfile(id, dto));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<StudentProfile> getStudentById(@PathVariable Long id) {
-        return ResponseEntity.ok(studentProfileService.getStudentById(id));
+    @Operation(summary = "Get student by ID")
+    public ResponseEntity<StudentProfile> getProfile(@PathVariable Long id) {
+        return ResponseEntity.ok(studentProfileService.getProfile(id));
     }
 
     @GetMapping
-    public ResponseEntity<List<StudentProfile>> getAllStudents() {
-        return ResponseEntity.ok(studentProfileService.getAllStudents());
+    @Operation(summary = "Get all students")
+    public ResponseEntity<List<StudentProfile>> getAllProfiles() {
+        return ResponseEntity.ok(studentProfileService.getAllProfiles());
     }
 
     @PutMapping("/{id}/status")
-    public ResponseEntity<StudentProfile> updateStudentStatus(@PathVariable Long id, @RequestParam boolean active) {
+    @Operation(summary = "Update student status")
+    public ResponseEntity<StudentProfile> updateStatus(@PathVariable Long id, 
+                                                       @RequestParam boolean active) {
         return ResponseEntity.ok(studentProfileService.updateStudentStatus(id, active));
     }
 
     @GetMapping("/lookup/{studentId}")
-    public ResponseEntity<StudentProfile> findByStudentId(@PathVariable String studentId) {
-        return studentProfileService.findByStudentId(studentId)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    @Operation(summary = "Lookup student by student ID")
+    public ResponseEntity<StudentProfile> lookupByStudentId(@PathVariable String studentId) {
+        return ResponseEntity.ok(studentProfileService.findByStudentId(studentId));
     }
 }
