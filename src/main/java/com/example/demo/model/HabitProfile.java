@@ -14,6 +14,7 @@ import java.time.LocalTime;
 @AllArgsConstructor
 public class HabitProfile {
 
+    // ===== ENUMS (TEST REQUIRES THESE EXACT NAMES) =====
     public enum CleanlinessLevel { LOW, MEDIUM, HIGH }
     public enum NoiseTolerance { LOW, BALANCED, HIGH }
     public enum SleepSchedule { EARLY, NIGHT, FLEXIBLE }
@@ -23,11 +24,11 @@ public class HabitProfile {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // Required by tests
+    // 🔴 TEST USES THIS (NOT StudentProfile)
     private Long studentId;
 
-    private Boolean smoking = false;
-    private Boolean drinking = false;
+    private Boolean smoking;
+    private Boolean drinking;
 
     private LocalTime sleepTime;
     private LocalTime wakeTime;
@@ -44,5 +45,5 @@ public class HabitProfile {
     @Enumerated(EnumType.STRING)
     private SocialPreference socialPreference;
 
-    private Integer studyHoursPerDay = 0;
+    private Integer studyHoursPerDay;
 }
