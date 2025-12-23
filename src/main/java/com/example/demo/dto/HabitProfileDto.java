@@ -1,21 +1,26 @@
 package com.example.demo.dto;
 
-import com.example.demo.model.HabitProfile;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import java.time.LocalTime;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class HabitProfileDto {
-
+    private Long id;
     private Long studentId;
-
-    private HabitProfile.SleepSchedule sleepSchedule;
-
+    private Boolean smoking;
+    private Boolean drinking;
+    private LocalTime sleepTime;
+    private LocalTime wakeTime;
+    private String cleanlinessLevel;
+    private String noisePreference;
+    private String studyStyle;
+    private String socialPreference;
+    private String visitorsFrequency;
+    private String sleepSchedule;
     private Integer studyHoursPerDay;
-
-    // BOTH use the same enum: Level
-    private HabitProfile.Level cleanlinessLevel;
-
-    private HabitProfile.Level noiseTolerance;
-
-    private HabitProfile.SocialPreference socialPreference;
+    private String noiseTolerance;
 }
