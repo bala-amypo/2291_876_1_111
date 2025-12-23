@@ -12,27 +12,21 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RoomAssignmentRecord {
+
+    public enum Status {
+        ASSIGNED, REJECTED, CANCELLED
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
     private String roomNumber;
-
-    @Column(nullable = false)
     private Long studentAId;
-
-    @Column(nullable = false)
     private Long studentBId;
 
-    @Column(nullable = false, updatable = false)
-    private LocalDateTime assignedAt = LocalDateTime.now();
+    @Enumerated(EnumType.STRING)
+    private Status status;
 
-    @Column(nullable = false)
-    private String status;
-
-    @PrePersist
-    protected void onCreate() {
-        assignedAt = LocalDateTime.now();
-    }
+    private LocalDateTime assignedAt;
 }

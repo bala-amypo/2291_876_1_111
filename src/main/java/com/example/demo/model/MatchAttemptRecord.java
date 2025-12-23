@@ -5,33 +5,27 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
-
 @Entity
 @Table(name = "match_attempt_records")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class MatchAttemptRecord {
+
+    public enum Status {
+        PENDING, SUCCESS, FAILED
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
     private Long initiatorStudentId;
-
-    @Column(nullable = false)
     private Long candidateStudentId;
-
     private Long resultScoreId;
 
-    @Column(nullable = false)
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private Status status;
 
-    @Column(nullable = false, updatable = false)
-    private LocalDateTime attemptedAt = LocalDateTime.now();
-
-    @PrePersist
-    protected void onCreate() {
-        attemptedAt = LocalDateTime.now();
-    }
+    private LocalDateTime attemptedAt;
 }
