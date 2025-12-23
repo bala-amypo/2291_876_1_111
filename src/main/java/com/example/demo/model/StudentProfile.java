@@ -24,7 +24,7 @@ public class StudentProfile {
     private UserAccount userAccount;
 
     // 🔴 REQUIRED BY TESTS
-    private Long studentId;
+    private String studentId;
 
     // 🔴 REQUIRED BY TESTS
     private String email;
