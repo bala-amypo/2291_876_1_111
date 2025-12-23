@@ -18,6 +18,11 @@ public class StudentProfileServiceImpl implements StudentProfileService {
     private final StudentProfileRepository studentRepo;
     private final UserAccountRepository userRepo;
 
+public StudentProfileServiceImpl(StudentProfileRepository studentRepo) {
+    this.studentRepo = studentRepo;
+    this.userRepo = null;
+}
+
     public StudentProfileServiceImpl(StudentProfileRepository studentRepo,
                                      UserAccountRepository userRepo) {
         this.studentRepo = studentRepo;
