@@ -5,10 +5,17 @@ import lombok.Data;
 
 @Data
 public class HabitProfileDto {
+
     private Long studentId;
+
     private HabitProfile.SleepSchedule sleepSchedule;
+
     private Integer studyHoursPerDay;
-    private HabitProfile.CleanlinessLevel cleanlinessLevel;
-    private HabitProfile.NoiseTolerance noiseTolerance;
+
+    // BOTH use the same enum: Level
+    private HabitProfile.Level cleanlinessLevel;
+
+    private HabitProfile.Level noiseTolerance;
+
     private HabitProfile.SocialPreference socialPreference;
 }
