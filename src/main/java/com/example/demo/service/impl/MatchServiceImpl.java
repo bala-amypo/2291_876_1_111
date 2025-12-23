@@ -70,59 +70,60 @@ public class MatchServiceImpl implements MatchService {
     }
 
     private double calculateCompatibilityScore(HabitProfile habitA, HabitProfile habitB) {
-        double totalScore = 0;
-        int factors = 0;
+    double totalScore = 0;
+    int factors = 0;
 
-        // Sleep schedule compatibility
-        if (habitA.getSleepTime() != null && habitB.getSleepTime() != null) {
-            totalScore += calculateTimeCompatibility(habitA.getSleepTime(), habitB.getSleepTime());
-            factors++;
-        }
-
-        // Wake time compatibility
-        if (habitA.getWakeTime() != null && habitB.getWakeTime() != null) {
-            totalScore += calculateTimeCompatibility(habitA.getWakeTime(), habitB.getWakeTime());
-            factors++;
-        }
-
-        // Smoking compatibility
-        if (habitA.getSmoking() != null && habitB.getSmoking() != null) {
-            totalScore += (habitA.getSmoking().equals(habitB.getSmoking()) ? 100 : 0);
-            factors++;
-        }
-
-        // Drinking compatibility
-        if (habitA.getDrinking() != null && habitB.getDrinking() != null) {
-            totalScore += (habitA.getDrinking().equals(habitB.getDrinking()) ? 100 : 0);
-            factors++;
-        }
-
-        // Cleanliness level compatibility
-        if (habitA.getCleanlinessLevel() != null && habitB.getCleanlinessLevel() != null) {
-            totalScore += (habitA.getCleanlinessLevel().equals(habitB.getCleanlinessLevel()) ? 100 : 50);
-            factors++;
-        }
-
-        // Noise preference compatibility
-        if (habitA.getNoisePreference() != null && habitB.getNoisePreference() != null) {
-            totalScore += (habitA.getNoisePreference().equals(habitB.getNoisePreference()) ? 100 : 50);
-            factors++;
-        }
-
-        // Study style compatibility
-        if (habitA.getStudyStyle() != null && habitB.getStudyStyle() != null) {
-            totalScore += (habitA.getStudyStyle().equals(habitB.getStudyStyle()) ? 100 : 70);
-            factors++;
-        }
-
-        // Social preference compatibility
-        if (habitA.getSocialPreference() != null && habitB.getSocialPreference() != null) {
-            totalScore += (habitA.getSocialPreference().equals(habitB.getSocialPreference()) ? 100 : 60);
-            factors++;
-        }
-
-        return factors > 0 ? totalScore / factors : 50.0;
+    // Sleep time compatibility
+    if (habitA.getSleepTime() != null && habitB.getSleepTime() != null) {
+        totalScore += calculateTimeCompatibility(habitA.getSleepTime(), habitB.getSleepTime());
+        factors++;
     }
+
+    // Wake time compatibility
+    if (habitA.getWakeTime() != null && habitB.getWakeTime() != null) {
+        totalScore += calculateTimeCompatibility(habitA.getWakeTime(), habitB.getWakeTime());
+        factors++;
+    }
+
+    // Smoking
+    if (habitA.getSmoking() != null && habitB.getSmoking() != null) {
+        totalScore += habitA.getSmoking().equals(habitB.getSmoking()) ? 100 : 0;
+        factors++;
+    }
+
+    // Drinking
+    if (habitA.getDrinking() != null && habitB.getDrinking() != null) {
+        totalScore += habitA.getDrinking().equals(habitB.getDrinking()) ? 100 : 0;
+        factors++;
+    }
+
+    // ✅ Cleanliness (ENUM)
+    if (habitA.getCleanlinessLevel() != null && habitB.getCleanlinessLevel() != null) {
+        totalScore += habitA.getCleanlinessLevel() == habitB.getCleanlinessLevel() ? 100 : 50;
+        factors++;
+    }
+
+    // ✅ Noise tolerance (ENUM)
+    if (habitA.getNoiseTolerance() != null && habitB.getNoiseTolerance() != null) {
+        totalScore += habitA.getNoiseTolerance() == habitB.getNoiseTolerance() ? 100 : 50;
+        factors++;
+    }
+
+    // ✅ Sleep schedule (ENUM)
+    if (habitA.getSleepSchedule() != null && habitB.getSleepSchedule() != null) {
+        totalScore += habitA.getSleepSchedule() == habitB.getSleepSchedule() ? 100 : 60;
+        factors++;
+    }
+
+    // ✅ Social preference (ENUM)
+    if (habitA.getSocialPreference() != null && habitB.getSocialPreference() != null) {
+        totalScore += habitA.getSocialPreference() == habitB.getSocialPreference() ? 100 : 60;
+        factors++;
+    }
+
+    return factors > 0 ? totalScore / factors : 50.0;
+}
+
 
     private double calculateTimeCompatibility(LocalTime time1, LocalTime time2) {
         long diff = Math.abs(time1.toSecondOfDay() - time2.toSecondOfDay());
