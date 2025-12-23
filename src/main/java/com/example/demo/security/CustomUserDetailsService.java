@@ -1,30 +1,22 @@
 package com.example.demo.security;
 
-import com.example.demo.model.AppUser;
-import com.example.demo.repository.UserRepository;
-import org.springframework.security.core.userdetails.*;
+import com.example.demo.model.UserAccount;
+import com.example.demo.repository.UserAccountRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
-
-    private final UserRepository repository;
-
-    public CustomUserDetailsService(UserRepository repository) {
-        this.repository = repository;
-    }
+    private final UserAccountRepository userAccountRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String username)
-            throws UsernameNotFoundException {
-
-        AppUser user = repository.findByUsername(username)
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        UserAccount userAccount = userAccountRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
-
-        return User.builder()
-                .username(user.getUsername())
-                .password(user.getPassword())
-                .roles(user.getRole())
-                .build();
+        return userAccount;
     }
 }
