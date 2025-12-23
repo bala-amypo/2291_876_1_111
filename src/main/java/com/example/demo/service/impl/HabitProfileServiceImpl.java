@@ -1,47 +1,47 @@
-package com.example.demo.service.impl;
+package com.example.demo.service;
 
+import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.model.HabitProfile;
 import com.example.demo.repository.HabitProfileRepository;
-import com.example.demo.service.HabitProfileService;
-import com.example.demo.exception.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
-@Transactional
 public class HabitProfileServiceImpl implements HabitProfileService {
 
-    private final HabitProfileRepository repo;
+    private final HabitProfileRepository repository;
 
-    public HabitProfileServiceImpl(HabitProfileRepository repo) {
-        this.repo = repo;
+    public HabitProfileServiceImpl(HabitProfileRepository repository) {
+        this.repository = repository;
     }
 
     @Override
     public HabitProfile createOrUpdateHabit(HabitProfile habit) {
-        // Use the correct getter
-        Integer studyHours = habit.getStudyHoursPerDay();
-        if (studyHours == null || studyHours < 0 || studyHours > 24) {
-            throw new IllegalArgumentException("Study hours must be between 0 and 24");
+
+        if (habit.getStudyHoursPerDay() != null && habit.getStudyHoursPerDay() < 0) {
+            throw new IllegalArgumentException("study hours");
         }
-        return repo.save(habit);
+
+        habit.setUpdatedAt(LocalDateTime.now());
+        return repository.save(habit);
     }
 
     @Override
     public HabitProfile getHabitByStudent(Long studentId) {
-        return repo.findByStudentId(studentId)
-            .orElseThrow(() -> new ResourceNotFoundException("Habit profile not found"));
-    }
-
-    @Override
-    public HabitProfile getHabitById(Long id) {
-        return repo.findById(id)
-            .orElseThrow(() -> new ResourceNotFoundException("Habit profile not found"));
+        return repository.findByStudentId(studentId)
+                .orElseThrow(() -> new ResourceNotFoundException("not found"));
     }
 
     @Override
     public List<HabitProfile> getAllHabitProfiles() {
-        return repo.findAll();
+        return repository.findAll();
+    }
+
+    @Override
+    public HabitProfile getHabitById(Long id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("not found"));
     }
 }
