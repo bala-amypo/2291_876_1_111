@@ -1,14 +1,15 @@
 package com.example.demo.model;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.EnumType;
-import java.time.LocalDateTime;
-@Entity
 
+import jakarta.persistence.*;
+import java.time.LocalDateTime;
+
+@Entity
+@Table(
+    name = "compatibility_scores",
+    uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"studentAId", "studentBId"})
+    }
+)
 public class CompatibilityScoreRecord {
 
     @Id
@@ -27,15 +28,20 @@ public class CompatibilityScoreRecord {
     @Column(columnDefinition = "TEXT")
     private String detailsJson;
 
-    public enum CompatibilityLevel {
-        LOW, MEDIUM, HIGH, EXCELLENT
+    // ✅ No-args
+    public CompatibilityScoreRecord() {
     }
 
-    public CompatibilityScoreRecord() {}
-
-    public CompatibilityScoreRecord(Long id, Long studentAId, Long studentBId,
-                                    Double score, CompatibilityLevel compatibilityLevel,
-                                    LocalDateTime computedAt, String detailsJson) {
+    // ✅ All-args
+    public CompatibilityScoreRecord(
+            Long id,
+            Long studentAId,
+            Long studentBId,
+            Double score,
+            CompatibilityLevel compatibilityLevel,
+            LocalDateTime computedAt,
+            String detailsJson
+    ) {
         this.id = id;
         this.studentAId = studentAId;
         this.studentBId = studentBId;
@@ -44,6 +50,12 @@ public class CompatibilityScoreRecord {
         this.computedAt = computedAt;
         this.detailsJson = detailsJson;
     }
+
+    public enum CompatibilityLevel {
+        LOW, MEDIUM, HIGH, EXCELLENT
+    }
+
+    // getters & setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 

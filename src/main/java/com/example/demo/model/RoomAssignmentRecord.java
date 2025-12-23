@@ -1,9 +1,10 @@
 package com.example.demo.model;
+
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-
+@Table(name = "room_assignments")
 public class RoomAssignmentRecord {
 
     @Id
@@ -13,20 +14,25 @@ public class RoomAssignmentRecord {
     private String roomNumber;
     private Long studentAId;
     private Long studentBId;
+
     private LocalDateTime assignedAt;
+
     @Enumerated(EnumType.STRING)
-    private Status status; 
-    public enum Status{
-        ACTIVE,
-        COMPLETED,
-        CANCELLED
+    private AssignmentStatus status;
+
+    // ✅ No-args
+    public RoomAssignmentRecord() {
     }
 
-    public RoomAssignmentRecord() {}
-
-    public RoomAssignmentRecord(Long id, String roomNumber, Long studentAId,
-                                Long studentBId, LocalDateTime assignedAt,
-                                Status status) {
+    // ✅ All-args
+    public RoomAssignmentRecord(
+            Long id,
+            String roomNumber,
+            Long studentAId,
+            Long studentBId,
+            LocalDateTime assignedAt,
+            AssignmentStatus status
+    ) {
         this.id = id;
         this.roomNumber = roomNumber;
         this.studentAId = studentAId;
@@ -35,6 +41,11 @@ public class RoomAssignmentRecord {
         this.status = status;
     }
 
+    public enum AssignmentStatus {
+        ACTIVE, COMPLETE, CANCELLED
+    }
+
+    // getters & setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -50,6 +61,6 @@ public class RoomAssignmentRecord {
     public LocalDateTime getAssignedAt() { return assignedAt; }
     public void setAssignedAt(LocalDateTime assignedAt) { this.assignedAt = assignedAt; }
 
-    public Status getStatus() { return status; }
-    public void setStatus(Status status) { this.status = status; }
+    public AssignmentStatus getStatus() { return status; }
+    public void setStatus(AssignmentStatus status) { this.status = status; }
 }
