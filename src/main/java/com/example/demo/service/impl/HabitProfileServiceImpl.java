@@ -62,5 +62,15 @@ public class HabitProfileServiceImpl implements HabitProfileService {
     @Override
     public List<HabitProfile> getAllHabitProfiles() {
         return habitProfileRepository.findAll();
+        
     }
+   @Override
+public HabitProfile getForStudent(Long studentId) {
+    return habitProfileRepository.findByStudentId(studentId)
+            .orElseThrow(() ->
+                    new ResourceNotFoundException("Habit profile not found for student")
+            );
+}
+
+
 }
