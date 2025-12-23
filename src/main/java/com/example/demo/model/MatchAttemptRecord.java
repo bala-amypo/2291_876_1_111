@@ -1,70 +1,33 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
+import lombok.Data;
+
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "match_attempts")
+@Table(name = "match_attempt_record")
+@Data
 public class MatchAttemptRecord {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "initiator_student_id", nullable = false)
     private Long initiatorStudentId;
+
+    @Column(name = "candidate_student_id", nullable = false)
     private Long candidateStudentId;
+
+    @Column(name = "result_score_id")
     private Long resultScoreId;
 
     @Enumerated(EnumType.STRING)
-    private MatchStatus status;
+    private Status status;
 
-    private LocalDateTime attemptedAt;
+    private LocalDateTime attemptedAt = LocalDateTime.now();
 
-    // ✅ No-args
-    public MatchAttemptRecord() {
-    }
-
-    // ✅ All-args
-    public MatchAttemptRecord(
-            Long id,
-            Long initiatorStudentId,
-            Long candidateStudentId,
-            Long resultScoreId,
-            MatchStatus status,
-            LocalDateTime attemptedAt
-    ) {
-        this.id = id;
-        this.initiatorStudentId = initiatorStudentId;
-        this.candidateStudentId = candidateStudentId;
-        this.resultScoreId = resultScoreId;
-        this.status = status;
-        this.attemptedAt = attemptedAt;
-    }
-
-    public enum MatchStatus {
+    public enum Status {
         MATCHED, NOT_COMPATIBLE, PENDING_REVIEW
     }
-
-    // getters & setters
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-
-    public Long getInitiatorStudentId() { return initiatorStudentId; }
-    public void setInitiatorStudentId(Long initiatorStudentId) {
-        this.initiatorStudentId = initiatorStudentId;
-    }
-
-    public Long getCandidateStudentId() { return candidateStudentId; }
-    public void setCandidateStudentId(Long candidateStudentId) {
-        this.candidateStudentId = candidateStudentId;
-    }
-
-    public Long getResultScoreId() { return resultScoreId; }
-    public void setResultScoreId(Long resultScoreId) { this.resultScoreId = resultScoreId; }
-
-    public MatchStatus getStatus() { return status; }
-    public void setStatus(MatchStatus status) { this.status = status; }
-
-    public LocalDateTime getAttemptedAt() { return attemptedAt; }
-    public void setAttemptedAt(LocalDateTime attemptedAt) { this.attemptedAt = attemptedAt; }
 }
