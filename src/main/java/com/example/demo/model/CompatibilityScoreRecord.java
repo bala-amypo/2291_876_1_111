@@ -1,24 +1,23 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
-import lombok.Data;
-
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "compatibility_score_record")
-@Data
+@Table(
+    name = "compatibility_scores",
+    uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"studentAId", "studentBId"})
+    }
+)
 public class CompatibilityScoreRecord {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "student_a_id", nullable = false)
     private Long studentAId;
-
-    @Column(name = "student_b_id", nullable = false)
     private Long studentBId;
-
     private Double score;
 
     @Enumerated(EnumType.STRING)
@@ -26,8 +25,21 @@ public class CompatibilityScoreRecord {
 
     private LocalDateTime computedAt = LocalDateTime.now();
 
-    @Column(name = "details_json")
+    @Column(columnDefinition = "TEXT")
     private String detailsJson;
+
+    protected CompatibilityScoreRecord() {}
+
+    public CompatibilityScoreRecord(Long studentAId, Long studentBId,
+                                    Double score, CompatibilityLevel compatibilityLevel,
+                                    String detailsJson) {
+        this.studentAId = studentAId;
+        this.studentBId = studentBId;
+        this.score = score;
+        this.compatibilityLevel = compatibilityLevel;
+        this.detailsJson = detailsJson;
+        this.computedAt = LocalDateTime.now();
+    }
 
     public enum CompatibilityLevel {
         LOW, MEDIUM, HIGH, EXCELLENT

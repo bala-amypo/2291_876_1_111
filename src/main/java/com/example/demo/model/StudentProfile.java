@@ -27,33 +27,29 @@ public class StudentProfile {
     private String email;
 
     private String department;
-
     private Integer yearLevel;
-
     private Boolean active = true;
-
     private LocalDateTime createdAt = LocalDateTime.now();
+
+    // JPA requires this
+    protected StudentProfile() {}
+
+    // parameterised constructor
+    public StudentProfile(String studentId, String fullName, String email,
+                          String department, Integer yearLevel, Boolean active) {
+        this.studentId = studentId;
+        this.fullName = fullName;
+        this.email = email;
+        this.department = department;
+        this.yearLevel = yearLevel;
+        this.active = active;
+        this.createdAt = LocalDateTime.now();
+    }
 
     // getters & setters
     public Long getId() { return id; }
-
     public String getStudentId() { return studentId; }
-    public void setStudentId(String studentId) { this.studentId = studentId; }
-
     public String getFullName() { return fullName; }
-    public void setFullName(String fullName) { this.fullName = fullName; }
-
     public String getEmail() { return email; }
-    public void setEmail(String email) { this.email = email; }
-
-    public String getDepartment() { return department; }
-    public void setDepartment(String department) { this.department = department; }
-
-    public Integer getYearLevel() { return yearLevel; }
-    public void setYearLevel(Integer yearLevel) { this.yearLevel = yearLevel; }
-
     public Boolean isActive() { return active; }
-    public void setActive(Boolean active) { this.active = active; }
-
-    public LocalDateTime getCreatedAt() { return createdAt; }
 }

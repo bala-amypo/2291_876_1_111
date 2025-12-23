@@ -1,25 +1,18 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
-import lombok.Data;
-
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "match_attempt_record")
-@Data
+@Table(name = "match_attempts")
 public class MatchAttemptRecord {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "initiator_student_id", nullable = false)
     private Long initiatorStudentId;
-
-    @Column(name = "candidate_student_id", nullable = false)
     private Long candidateStudentId;
-
-    @Column(name = "result_score_id")
     private Long resultScoreId;
 
     @Enumerated(EnumType.STRING)
@@ -27,7 +20,20 @@ public class MatchAttemptRecord {
 
     private LocalDateTime attemptedAt = LocalDateTime.now();
 
+    protected MatchAttemptRecord() {}
+
+    public MatchAttemptRecord(Long initiatorStudentId, Long candidateStudentId,
+                              Long resultScoreId, Status status) {
+        this.initiatorStudentId = initiatorStudentId;
+        this.candidateStudentId = candidateStudentId;
+        this.resultScoreId = resultScoreId;
+        this.status = status;
+        this.attemptedAt = LocalDateTime.now();
+    }
+
     public enum Status {
-        MATCHED, NOT_COMPATIBLE, PENDING_REVIEW
+        MATCHED,
+        NOT_COMPATIBLE,
+        PENDING_REVIEW
     }
 }
