@@ -1,3 +1,17 @@
+package com.example.demo.service.impl;
+
+import com.example.demo.model.StudentProfile;
+import com.example.demo.repository.StudentProfileRepository;
+import com.example.demo.repository.UserAccountRepository;
+import com.example.demo.service.StudentProfileService;
+import com.example.demo.exception.ResourceNotFoundException;
+
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+
+
 @Service
 public class StudentProfileServiceImpl implements StudentProfileService {
 
