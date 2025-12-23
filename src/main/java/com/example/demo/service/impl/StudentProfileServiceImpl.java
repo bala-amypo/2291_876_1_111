@@ -29,11 +29,12 @@ public class StudentProfileServiceImpl implements StudentProfileService {
         return studentRepo.save(profile);
     }
 
-    @Override
-    public StudentProfile getStudentById(Long id) {
-        return studentRepo.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Student not found"));
-    }
+   @Override
+public StudentProfile findByStudentId(String studentId) {
+    return studentRepo.findByStudentId(studentId)
+            .orElseThrow(() -> new ResourceNotFoundException("Student not found"));
+}
+
 
     @Override
     public List<StudentProfile> getAllStudents() {
