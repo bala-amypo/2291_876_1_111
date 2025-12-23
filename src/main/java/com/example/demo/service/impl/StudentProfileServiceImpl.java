@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import com.example.demo.service.StudentProfileService;
 
-@ServiceStudentProfileService
+@Service
 public class StudentProfileServiceImpl implements StudentProfileService {
 
     private final StudentProfileRepository studentProfileRepository;
