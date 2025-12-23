@@ -1,47 +1,51 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.StudentProfileDto;
 import com.example.demo.model.StudentProfile;
 import com.example.demo.service.StudentProfileService;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/students")
-@Tag(name = "Students")
+@Tag(name = "Student Profiles", description = "Student profile management")
+@RequiredArgsConstructor
 public class StudentProfileController {
-
-    private final StudentProfileService service;
-
-    public StudentProfileController(StudentProfileService service) {
-        this.service = service;
-    }
+    private final StudentProfileService studentProfileService;
 
     @PostMapping
-    public StudentProfile createStudent(@RequestBody StudentProfile profile) {
-        return service.createStudent(profile);
+    public ResponseEntity<StudentProfile> createStudent(@RequestBody StudentProfileDto dto) {
+        StudentProfile profile = new StudentProfile();
+        profile.setStudentId(dto.getStudentId());
+        profile.setFullName(dto.getFullName());
+        profile.setEmail(dto.getEmail());
+        profile.setDepartment(dto.getDepartment());
+        profile.setYearLevel(dto.getYearLevel());
+        profile.setActive(dto.isActive());
+        return ResponseEntity.ok(studentProfileService.createStudent(profile));
     }
 
     @GetMapping("/{id}")
-    public StudentProfile getStudentById(@PathVariable Long id) {
-        return service.getStudentById(id);
+    public ResponseEntity<StudentProfile> getStudentById(@PathVariable Long id) {
+        return ResponseEntity.ok(studentProfileService.getStudentById(id));
     }
 
     @GetMapping
-    public List<StudentProfile> getAllStudents() {
-        return service.getAllStudents();
+    public ResponseEntity<List<StudentProfile>> getAllStudents() {
+        return ResponseEntity.ok(studentProfileService.getAllStudents());
     }
 
     @PutMapping("/{id}/status")
-    public StudentProfile updateStatus(
-            @PathVariable Long id,
-            @RequestParam boolean active) {
-        return service.updateStudentStatus(id, active);
+    public ResponseEntity<StudentProfile> updateStudentStatus(@PathVariable Long id, @RequestParam boolean active) {
+        return ResponseEntity.ok(studentProfileService.updateStudentStatus(id, active));
     }
 
     @GetMapping("/lookup/{studentId}")
-    public StudentProfile findByStudentId(@PathVariable String studentId) {
-        return service.findByStudentId(studentId);
+    public ResponseEntity<StudentProfile> findByStudentId(@PathVariable String studentId) {
+        return ResponseEntity.ok(studentProfileService.findByStudentId(studentId));
     }
 }
