@@ -14,13 +14,17 @@ import java.util.function.Function;
 
 @Component
 public class JwtUtil {
-    private final SecretKey secretKey = Keys.secretKeyFor(SignatureAlgorithm.HS256);
-    private final long jwtExpiration = 86400000; // 24 hours
+    
+    // FIXED: Use static secret key string
+    private static final String SECRET = "mySecretKeyForJWTThatIsLongEnoughForHS256Algorithm1234567890";
+    private static final SecretKey SECRET_KEY = Keys.hmacShaKeyFor(SECRET.getBytes());
+    private final long JWT_EXPIRATION = 86400000L; // 24 hours
 
     public String generateToken(String email, Long userId, String role) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("userId", userId);
         claims.put("role", role);
+        
         return createToken(claims, email);
     }
 
@@ -29,8 +33,8 @@ public class JwtUtil {
                 .setClaims(claims)
                 .setSubject(subject)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + jwtExpiration))
-                .signWith(secretKey)
+                .setExpiration(new Date(System.currentTimeMillis() + JWT_EXPIRATION))
+                .signWith(SECRET_KEY, SignatureAlgorithm.HS256)
                 .compact();
     }
 
@@ -39,7 +43,10 @@ public class JwtUtil {
     }
 
     public Long extractUserId(String token) {
-        return extractClaim(token, claims -> Long.valueOf(claims.get("userId", String.class)));
+        return extractClaim(token, claims -> {
+            final Object userId = claims.get("userId");
+            return userId instanceof Long ? (Long) userId : Long.parseLong(userId.toString());
+        });
     }
 
     public String extractRole(String token) {
@@ -53,7 +60,7 @@ public class JwtUtil {
 
     private Claims extractAllClaims(String token) {
         return Jwts.parserBuilder()
-                .setSigningKey(secretKey)
+                .setSigningKey(SECRET_KEY)
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
