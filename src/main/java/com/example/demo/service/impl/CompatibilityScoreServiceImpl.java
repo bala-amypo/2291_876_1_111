@@ -1,24 +1,23 @@
 package com.example.demo.service.impl;
 
 import com.example.demo.exception.ResourceNotFoundException;
-import com.example.demo.model.*;
+import com.example.demo.model.CompatibilityScoreRecord;
+import com.example.demo.model.HabitProfile;
 import com.example.demo.repository.CompatibilityScoreRecordRepository;
 import com.example.demo.repository.HabitProfileRepository;
 import com.example.demo.service.CompatibilityScoreService;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
 
 @Service
-@RequiredArgsConstructor
 public class CompatibilityScoreServiceImpl implements CompatibilityScoreService {
+    
     private final CompatibilityScoreRecordRepository scoreRepository;
     private final HabitProfileRepository habitRepository;
 
+    // EXACT TEST CONSTRUCTOR
     public CompatibilityScoreServiceImpl(CompatibilityScoreRecordRepository scoreRepository, 
                                        HabitProfileRepository habitRepository) {
         this.scoreRepository = scoreRepository;
@@ -37,7 +36,7 @@ public class CompatibilityScoreServiceImpl implements CompatibilityScoreService 
                 .orElseThrow(() -> new ResourceNotFoundException("not found"));
 
         double score = calculateCompatibilityScore(habitA, habitB);
-        CompatibilityLevel level = determineLevel(score);
+        CompatibilityScoreRecord.CompatibilityLevel level = determineLevel(score);
 
         CompatibilityScoreRecord record = new CompatibilityScoreRecord();
         record.setStudentAId(Math.min(studentAId, studentBId));
@@ -52,25 +51,23 @@ public class CompatibilityScoreServiceImpl implements CompatibilityScoreService 
 
     private double calculateCompatibilityScore(HabitProfile a, HabitProfile b) {
         double score = 0.0;
-        // Simple scoring logic - tests expect deterministic results
-        if (a.getSleepSchedule() == b.getSleepSchedule()) score += 25;
-        if (a.getCleanlinessLevel() == b.getCleanlinessLevel()) score += 25;
-        if (a.getNoiseTolerance() == b.getNoiseTolerance()) score += 25;
-        if (a.getSocialPreference() == b.getSocialPreference()) score += 25;
+        if (a.getSleepSchedule() != null && a.getSleepSchedule() == b.getSleepSchedule()) score += 25;
+        if (a.getCleanlinessLevel() != null && a.getCleanlinessLevel() == b.getCleanlinessLevel()) score += 25;
+        if (a.getNoiseTolerance() != null && a.getNoiseTolerance() == b.getNoiseTolerance()) score += 25;
+        if (a.getSocialPreference() != null && a.getSocialPreference() == b.getSocialPreference()) score += 25;
         return Math.min(100, score);
     }
 
-    private CompatibilityLevel determineLevel(double score) {
-        if (score >= 90) return CompatibilityLevel.EXCELLENT;
-        if (score >= 70) return CompatibilityLevel.HIGH;
-        if (score >= 50) return CompatibilityLevel.MEDIUM;
-        return CompatibilityLevel.LOW;
+    private CompatibilityScoreRecord.CompatibilityLevel determineLevel(double score) {
+        if (score >= 90) return CompatibilityScoreRecord.CompatibilityLevel.EXCELLENT;
+        if (score >= 70) return CompatibilityScoreRecord.CompatibilityLevel.HIGH;
+        if (score >= 50) return CompatibilityScoreRecord.CompatibilityLevel.MEDIUM;
+        return CompatibilityScoreRecord.CompatibilityLevel.LOW;
     }
 
     @Override
     public CompatibilityScoreRecord getScoreById(Long id) {
-        return scoreRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("not found"));
+        return scoreRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("not found"));
     }
 
     @Override

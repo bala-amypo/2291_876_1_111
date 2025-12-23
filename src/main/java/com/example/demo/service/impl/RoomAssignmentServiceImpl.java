@@ -6,17 +6,17 @@ import com.example.demo.model.StudentProfile;
 import com.example.demo.repository.RoomAssignmentRecordRepository;
 import com.example.demo.repository.StudentProfileRepository;
 import com.example.demo.service.RoomAssignmentService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class RoomAssignmentServiceImpl implements RoomAssignmentService {
+    
     private final RoomAssignmentRecordRepository assignmentRepository;
     private final StudentProfileRepository studentRepository;
 
+    // EXACT TEST CONSTRUCTOR
     public RoomAssignmentServiceImpl(RoomAssignmentRecordRepository assignmentRepository,
                                    StudentProfileRepository studentRepository) {
         this.assignmentRepository = assignmentRepository;
@@ -56,7 +56,11 @@ public class RoomAssignmentServiceImpl implements RoomAssignmentService {
     @Override
     public RoomAssignmentRecord updateStatus(Long id, String status) {
         RoomAssignmentRecord assignment = getAssignmentById(id);
-        assignment.setStatus(RoomAssignmentRecord.Status.valueOf(status));
+        try {
+            assignment.setStatus(RoomAssignmentRecord.Status.valueOf(status.toUpperCase()));
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("Invalid status");
+        }
         return assignmentRepository.save(assignment);
     }
 }

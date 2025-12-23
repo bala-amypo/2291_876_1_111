@@ -5,17 +5,17 @@ import com.example.demo.model.MatchAttemptRecord;
 import com.example.demo.repository.CompatibilityScoreRecordRepository;
 import com.example.demo.repository.MatchAttemptRecordRepository;
 import com.example.demo.service.MatchAttemptService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class MatchAttemptServiceImpl implements MatchAttemptService {
+    
     private final MatchAttemptRecordRepository attemptRepository;
     private final CompatibilityScoreRecordRepository scoreRepository;
 
+    // EXACT TEST CONSTRUCTOR
     public MatchAttemptServiceImpl(MatchAttemptRecordRepository attemptRepository,
                                  CompatibilityScoreRecordRepository scoreRepository) {
         this.attemptRepository = attemptRepository;
@@ -36,8 +36,11 @@ public class MatchAttemptServiceImpl implements MatchAttemptService {
     public MatchAttemptRecord updateAttemptStatus(Long attemptId, String status) {
         MatchAttemptRecord attempt = attemptRepository.findById(attemptId)
                 .orElseThrow(() -> new ResourceNotFoundException("not found"));
-        // Set status - simplified for tests
-        attempt.setStatus(MatchAttemptRecord.Status.valueOf(status));
+        try {
+            attempt.setStatus(MatchAttemptRecord.Status.valueOf(status.toUpperCase()));
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("Invalid status");
+        }
         return attemptRepository.save(attempt);
     }
 
