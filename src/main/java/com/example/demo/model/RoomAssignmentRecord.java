@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
-
 @Entity
 @Table(name = "room_assignment_records")
 @Data
@@ -14,7 +13,9 @@ import java.time.LocalDateTime;
 public class RoomAssignmentRecord {
 
     public enum Status {
-        ASSIGNED, REJECTED, CANCELLED
+        ASSIGNED,
+        CANCELLED,
+        PENDING
     }
 
     @Id
@@ -29,4 +30,9 @@ public class RoomAssignmentRecord {
     private Status status;
 
     private LocalDateTime assignedAt;
+
+    @PrePersist
+    void onCreate() {
+        assignedAt = LocalDateTime.now();
+    }
 }

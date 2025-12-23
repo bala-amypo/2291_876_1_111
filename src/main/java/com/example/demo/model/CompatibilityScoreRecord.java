@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
+
+
 @Entity
 @Table(name = "compatibility_score_records")
 @Data
@@ -13,7 +15,9 @@ import java.time.LocalDateTime;
 public class CompatibilityScoreRecord {
 
     public enum CompatibilityLevel {
-        LOW, MEDIUM, HIGH
+        LOW,
+        MEDIUM,
+        HIGH
     }
 
     @Id
@@ -27,8 +31,11 @@ public class CompatibilityScoreRecord {
     @Enumerated(EnumType.STRING)
     private CompatibilityLevel compatibilityLevel;
 
+    private String detailsJson;
     private LocalDateTime computedAt;
 
-    @Column(length = 2000)
-    private String detailsJson;
+    @PrePersist
+    void onCreate() {
+        computedAt = LocalDateTime.now();
+    }
 }
