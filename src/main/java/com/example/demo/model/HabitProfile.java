@@ -13,11 +13,22 @@ import java.time.LocalTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class HabitProfile {
+public enum CleanlinessLevel {
+    LOW, MEDIUM, HIGH
+}
 
-    public enum CleanlinessLevel { LOW, MEDIUM, HIGH }
-    public enum NoiseTolerance { LOW, MEDIUM, BALANCED, HIGH }
-    public enum SleepSchedule { EARLY, REGULAR, LATE }
-    public enum SocialPreference { INTROVERT, AMBIVERT, EXTROVERT }
+public enum NoiseTolerance {
+    LOW, MEDIUM, HIGH
+}
+
+public enum SleepSchedule {
+    EARLY, REGULAR, LATE
+}
+
+public enum SocialPreference {
+    INTROVERT, EXTROVERT, BALANCED
+}
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
