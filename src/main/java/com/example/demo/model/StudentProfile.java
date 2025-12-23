@@ -1,55 +1,81 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Entity
-@Table(
-    name = "student_profiles",
-    uniqueConstraints = {
-        @UniqueConstraint(columnNames = "studentId"),
-        @UniqueConstraint(columnNames = "email")
-    }
-)
+@Table(name = "student_profiles")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class StudentProfile {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @OneToOne
+    @JoinColumn(name = "user_account_id", unique = true, nullable = false)
+    private UserAccount userAccount;
+
+    @Column(unique = true, nullable = false)
     private String studentId;
 
     @Column(nullable = false)
     private String fullName;
 
     @Column(nullable = false)
-    private String email;
+    private Integer age;
 
+    @Column(nullable = false)
+    private String course;
+
+    @Column(nullable = false)
+    private Integer yearOfStudy;
+
+    @Column(nullable = false)
+    private String gender;
+
+    @Column(nullable = false)
+    private String roomTypePreference;
+
+    private LocalTime sleepTime;
+
+    private LocalTime wakeTime;
+
+    private Boolean smoking = false;
+
+    private Boolean drinking = false;
+
+    private String noiseTolerance;
+
+    private String studyTime;
+
+    @Column(nullable = false)
     private String department;
+
+    @Column(nullable = false)
     private Integer yearLevel;
+
+    @Column(nullable = false)
     private Boolean active = true;
+
+    @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
 
-    // JPA requires this
-    protected StudentProfile() {}
+    private LocalDateTime updatedAt;
 
-    // parameterised constructor
-    public StudentProfile(String studentId, String fullName, String email,
-                          String department, Integer yearLevel, Boolean active) {
-        this.studentId = studentId;
-        this.fullName = fullName;
-        this.email = email;
-        this.department = department;
-        this.yearLevel = yearLevel;
-        this.active = active;
-        this.createdAt = LocalDateTime.now();
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDateTime.now();
+        updatedAt = LocalDateTime.now();
     }
 
-    // getters & setters
-    public Long getId() { return id; }
-    public String getStudentId() { return studentId; }
-    public String getFullName() { return fullName; }
-    public String getEmail() { return email; }
-    public Boolean isActive() { return active; }
-}
+    @PreUpdate
+    protected void onUpdate() {
+        updatedAt = LocalDateTime.now();
+    }
+}       

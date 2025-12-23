@@ -1,49 +1,72 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Entity
 @Table(name = "habit_profiles")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class HabitProfile {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long studentId;
+    @OneToOne
+    @JoinColumn(name = "student_id", unique = true, nullable = false)
+    private StudentProfile student;
 
-    @Enumerated(EnumType.STRING)
-    private SleepSchedule sleepSchedule;
+    @Column(nullable = false)
+    private Boolean smoking = false;
 
-    private Integer studyHoursPerDay;
+    @Column(nullable = false)
+    private Boolean drinking = false;
 
-    @Enumerated(EnumType.STRING)
-    private Level cleanlinessLevel;
+    private LocalTime sleepTime;
 
-    @Enumerated(EnumType.STRING)
-    private Level noiseTolerance;
+    private LocalTime wakeTime;
 
-    @Enumerated(EnumType.STRING)
-    private SocialPreference socialPreference;
+    @Column(nullable = false)
+    private String cleanlinessLevel;
 
-    private LocalDateTime updatedAt = LocalDateTime.now();
+    @Column(nullable = false)
+    private String noisePreference;
 
-    protected HabitProfile() {}
+    @Column(nullable = false)
+    private String studyStyle;
 
-    public HabitProfile(Long studentId, SleepSchedule sleepSchedule,
-                        Integer studyHoursPerDay, Level cleanlinessLevel,
-                        Level noiseTolerance, SocialPreference socialPreference) {
-        this.studentId = studentId;
-        this.sleepSchedule = sleepSchedule;
-        this.studyHoursPerDay = studyHoursPerDay;
-        this.cleanlinessLevel = cleanlinessLevel;
-        this.noiseTolerance = noiseTolerance;
-        this.socialPreference = socialPreference;
-        this.updatedAt = LocalDateTime.now();
+    @Column(nullable = false)
+    private String socialPreference;
+
+    private String visitorsFrequency;
+
+    @Column(nullable = false)
+    private String sleepSchedule;
+
+    @Column(nullable = false)
+    private Integer studyHoursPerDay = 0;
+
+    @Column(nullable = false)
+    private String noiseTolerance;
+
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime createdAt = LocalDateTime.now();
+
+    private LocalDateTime updatedAt;
+
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDateTime.now();
+        updatedAt = LocalDateTime.now();
     }
 
-    public enum SleepSchedule { EARLY, REGULAR, LATE }
-    public enum Level { LOW, MEDIUM, HIGH }
-    public enum SocialPreference { INTROVERT, BALANCED, EXTROVERT }
-}
+    @PreUpdate
+    protected void onUpdate() {
+        updatedAt = LocalDateTime.now();
+    }
+}   
