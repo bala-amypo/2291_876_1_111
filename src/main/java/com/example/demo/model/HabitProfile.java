@@ -42,6 +42,20 @@ public enum SocialPreference {
     private LocalTime sleepTime;
     private LocalTime wakeTime;
 
+private LocalDateTime createdAt;
+private LocalDateTime updatedAt;
+
+@PrePersist
+void onCreate() {
+    createdAt = LocalDateTime.now();
+    updatedAt = LocalDateTime.now();
+}
+
+@PreUpdate
+void onUpdate() {
+    updatedAt = LocalDateTime.now();
+}
+
     @Enumerated(EnumType.STRING)
     private CleanlinessLevel cleanlinessLevel;
 
