@@ -9,6 +9,7 @@ import com.example.demo.repository.StudentProfileRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
+import com.example.demo.service.HabitProfileService;
 
 @Service
 public class HabitProfileServiceImpl implements HabitProfileService {

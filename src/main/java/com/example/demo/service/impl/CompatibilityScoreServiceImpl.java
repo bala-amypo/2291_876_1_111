@@ -8,6 +8,7 @@ import com.example.demo.repository.HabitProfileRepository;
 import org.springframework.stereotype.Service;
 import java.time.LocalTime;
 import java.util.List;
+import com.example.demo.service.CompatibilityScoreService;
 
 @Service
 public class CompatibilityScoreServiceImpl implements CompatibilityScoreService {

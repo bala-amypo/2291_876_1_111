@@ -8,8 +8,9 @@ import com.example.demo.repository.StudentProfileRepository;
 import com.example.demo.repository.UserAccountRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import com.example.demo.service.StudentProfileService;
 
-@Service
+@ServiceStudentProfileService
 public class StudentProfileServiceImpl implements StudentProfileService {
 
     private final StudentProfileRepository studentProfileRepository;

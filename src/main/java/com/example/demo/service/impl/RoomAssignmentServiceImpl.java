@@ -7,6 +7,7 @@ import com.example.demo.repository.RoomAssignmentRecordRepository;
 import com.example.demo.repository.StudentProfileRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import com.example.demo.service.RoomAssignmentService;
 
 @Service
 public class RoomAssignmentServiceImpl implements RoomAssignmentService {
