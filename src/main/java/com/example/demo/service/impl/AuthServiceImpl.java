@@ -8,6 +8,7 @@ import com.example.demo.security.JwtUtil;
 import com.example.demo.security.Role;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import com.example.demo.service.AuthService;
 
 @Service
 public class AuthServiceImpl implements AuthService {
