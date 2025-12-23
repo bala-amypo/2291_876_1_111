@@ -31,12 +31,16 @@ public class MatchAttemptServiceImpl implements MatchAttemptService {
     }
 
     @Override
-    public MatchAttemptRecord updateAttemptStatus(Long attemptId, String status) {
-        MatchAttemptRecord attempt = attemptRepository.findById(attemptId)
-                .orElseThrow(() -> new ResourceNotFoundException("Attempt not found"));
-        attempt.setStatus(status);
-        return attemptRepository.save(attempt);
-    }
+public MatchAttemptRecord updateAttemptStatus(
+        Long attemptId,
+        MatchAttemptRecord.Status status
+) {
+    MatchAttemptRecord attempt = attemptRepository.findById(attemptId)
+            .orElseThrow(() -> new ResourceNotFoundException("Attempt not found"));
+
+    attempt.setStatus(status);
+    return attemptRepository.save(attempt);
+}
 
     @Override
     public List<MatchAttemptRecord> getAllMatchAttempts() {

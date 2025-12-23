@@ -15,10 +15,12 @@ import java.time.LocalDateTime;
 public class CompatibilityScoreRecord {
 
     public enum CompatibilityLevel {
-        LOW,
-        MEDIUM,
-        HIGH
-    }
+    LOW,
+    MEDIUM,
+    HIGH,
+    EXCELLENT
+}
+                    
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

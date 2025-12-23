@@ -6,6 +6,6 @@ import java.util.List;
 public interface MatchAttemptService {
     MatchAttemptRecord logMatchAttempt(MatchAttemptRecord attempt);
     List<MatchAttemptRecord> getAttemptsByStudent(Long studentId);
-    MatchAttemptRecord updateAttemptStatus(Long attemptId, String status);
+    MatchAttemptRecord updateAttemptStatus(Long attemptId, MatchAttemptRecord.Status status);
     List<MatchAttemptRecord> getAllMatchAttempts();
 }
