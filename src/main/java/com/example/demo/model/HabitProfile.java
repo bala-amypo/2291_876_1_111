@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import java.time.LocalDateTime;
+
 import java.time.LocalTime;
 
 @Entity
@@ -13,64 +13,36 @@ import java.time.LocalTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class HabitProfile {
+
+    public enum CleanlinessLevel { LOW, MEDIUM, HIGH }
+    public enum NoiseTolerance { LOW, BALANCED, HIGH }
+    public enum SleepSchedule { EARLY, NIGHT, FLEXIBLE }
+    public enum SocialPreference { INTROVERT, AMBIVERT, EXTROVERT }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
-    @JoinColumn(name = "student_id", unique = true, nullable = false)
-    private StudentProfile student;
+    // Required by tests
+    private Long studentId;
 
-    @Column(nullable = false)
     private Boolean smoking = false;
-
-    @Column(nullable = false)
     private Boolean drinking = false;
 
     private LocalTime sleepTime;
-
     private LocalTime wakeTime;
 
-    @Column(nullable = false)
-    private String cleanlinessLevel;
+    @Enumerated(EnumType.STRING)
+    private CleanlinessLevel cleanlinessLevel;
 
-    @Column(nullable = false)
-    private String noisePreference;
+    @Enumerated(EnumType.STRING)
+    private NoiseTolerance noiseTolerance;
 
-    @Column(nullable = false)
-    private String studyStyle;
+    @Enumerated(EnumType.STRING)
+    private SleepSchedule sleepSchedule;
 
-    @Column(nullable = false)
-    private String socialPreference;
+    @Enumerated(EnumType.STRING)
+    private SocialPreference socialPreference;
 
-    private String visitorsFrequency;
-
-    @Column(nullable = false)
-    private String sleepSchedule;
-
-    @Column(nullable = false)
     private Integer studyHoursPerDay = 0;
-
-    @Column(nullable = false)
-    private String noiseTolerance;
-
-    @Column(nullable = false, updatable = false)
-    private LocalDateTime createdAt = LocalDateTime.now();
-
-    private LocalDateTime updatedAt;
-
-    @PrePersist
-    protected void onCreate() {
-        createdAt = LocalDateTime.now();
-        updatedAt = LocalDateTime.now();
-    }
-
-    @PreUpdate
-    protected void onUpdate() {
-        updatedAt = LocalDateTime.now();
-    }
-      public enum CleanlinessLevel { LOW, MEDIUM, HIGH }
-    public enum NoiseTolerance { LOW, MEDIUM, HIGH }
-    public enum SleepSchedule { EARLY_SLEEPER, NIGHT_OWL, FLEXIBLE }
-    public enum SocialPreference { INTROVERT, AMBIVERT, EXTROVERT }
-}   
+}
