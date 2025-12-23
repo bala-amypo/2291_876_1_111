@@ -53,4 +53,9 @@ public class StudentProfileServiceImpl implements StudentProfileService {
         profile.setActive(active);
         return studentRepo.save(profile);
     }
+    @Override
+public List<StudentProfile> getAllStudents() {
+    return studentRepo.findAll();
+}
+
 }
