@@ -51,16 +51,16 @@ public class HabitProfileServiceImpl implements HabitProfileService {
         return habitProfileRepository.save(habit);
     }
 
-    // ✅ THIS METHOD WAS MISSING (CAUSE OF YOUR ERROR)
+    // ✅ REQUIRED BY INTERFACE
     @Override
     public HabitProfile getHabitById(Long id) {
         return habitProfileRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Habit profile not found"));
     }
 
-    // ✅ Add ONLY if interface declares it
+    // ✅ REQUIRED BY INTERFACE (THIS WAS MISSING / MISNAMED)
     @Override
-    public List<HabitProfile> getAllHabits() {
+    public List<HabitProfile> getAllHabitProfiles() {
         return habitProfileRepository.findAll();
     }
 }
