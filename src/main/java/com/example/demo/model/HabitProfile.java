@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 
 import java.time.LocalTime;
+import java.time.LocalDateTime;
+
 
 @Entity
 @Table(name = "habit_profiles")
