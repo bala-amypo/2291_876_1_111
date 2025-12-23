@@ -81,17 +81,19 @@ public class StudentProfileServiceImpl implements StudentProfileService {
         profile.setActive(active);
         return studentRepo.save(profile);
     }
+private void mapDtoToEntity(StudentProfileDto dto, StudentProfile profile) {
+    if (dto.getStudentId() != null)
+        profile.setStudentId(String.valueOf(dto.getStudentId()));
 
-    private void mapDtoToEntity(StudentProfileDto dto, StudentProfile profile) {
-        if (dto.getStudentId() != null) profile.setStudentId(dto.getStudentId());
-        if (dto.getFullName() != null) profile.setFullName(dto.getFullName());
-        if (dto.getAge() != null) profile.setAge(dto.getAge());
-        if (dto.getCourse() != null) profile.setCourse(dto.getCourse());
-        if (dto.getYearOfStudy() != null) profile.setYearOfStudy(dto.getYearOfStudy());
-        if (dto.getGender() != null) profile.setGender(dto.getGender());
-        if (dto.getRoomTypePreference() != null) profile.setRoomTypePreference(dto.getRoomTypePreference());
-        if (dto.getDepartment() != null) profile.setDepartment(dto.getDepartment());
-        if (dto.getYearLevel() != null) profile.setYearLevel(dto.getYearLevel());
-        if (dto.getActive() != null) profile.setActive(dto.getActive());
-    }
+    if (dto.getFullName() != null) profile.setFullName(dto.getFullName());
+    if (dto.getAge() != null) profile.setAge(dto.getAge());
+    if (dto.getCourse() != null) profile.setCourse(dto.getCourse());
+    if (dto.getYearOfStudy() != null) profile.setYearOfStudy(dto.getYearOfStudy());
+    if (dto.getGender() != null) profile.setGender(dto.getGender());
+    if (dto.getRoomTypePreference() != null) profile.setRoomTypePreference(dto.getRoomTypePreference());
+    if (dto.getDepartment() != null) profile.setDepartment(dto.getDepartment());
+    if (dto.getYearLevel() != null) profile.setYearLevel(dto.getYearLevel());
+    if (dto.getActive() != null) profile.setActive(dto.getActive());
+}
+
 }
