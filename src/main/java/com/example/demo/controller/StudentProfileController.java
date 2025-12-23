@@ -25,7 +25,7 @@ public class StudentProfileController {
         profile.setEmail(dto.getEmail());
         profile.setDepartment(dto.getDepartment());
         profile.setYearLevel(dto.getYearLevel());
-        profile.setActive(dto.isActive() != null ? dto.isActive() : true);
+        profile.setActive(dto.isActive());  // FIXED: Simple boolean assignment
         return ResponseEntity.ok(studentProfileService.createStudent(profile));
     }
 
@@ -45,11 +45,9 @@ public class StudentProfileController {
     }
 
     @GetMapping("/lookup/{studentId}")
-    // FIXED: Handle Optional properly
     public ResponseEntity<StudentProfile> findByStudentId(@PathVariable String studentId) {
         return studentProfileService.findByStudentId(studentId)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 }
-
