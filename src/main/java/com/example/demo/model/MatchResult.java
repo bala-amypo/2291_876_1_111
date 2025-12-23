@@ -7,35 +7,34 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "compatibility_score_records")
+@Table(name = "match_results")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CompatibilityScoreRecord {
+public class MatchResult {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private Long studentAId;
+    @ManyToOne
+    @JoinColumn(name = "student_a_id", nullable = false)
+    private StudentProfile studentA;
 
-    @Column(nullable = false)
-    private Long studentBId;
+    @ManyToOne
+    @JoinColumn(name = "student_b_id", nullable = false)
+    private StudentProfile studentB;
 
     @Column(nullable = false)
     private Double score;
 
-    @Column(nullable = false)
-    private String compatibilityLevel;
-
     @Column(nullable = false, updatable = false)
-    private LocalDateTime computedAt = LocalDateTime.now();
+    private LocalDateTime createdAt = LocalDateTime.now();
 
-    @Column(length = 2000)
-    private String detailsJson;
+    @Column(length = 1000)
+    private String reasonSummary;
 
     @PrePersist
     protected void onCreate() {
-        computedAt = LocalDateTime.now();
+        createdAt = LocalDateTime.now();
     }
 }

@@ -1,39 +1,37 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "match_attempts")
+@Table(name = "match_attempt_records")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class MatchAttemptRecord {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private Long initiatorStudentId;
+
+    @Column(nullable = false)
     private Long candidateStudentId;
+
     private Long resultScoreId;
 
-    @Enumerated(EnumType.STRING)
-    private Status status;
+    @Column(nullable = false)
+    private String status;
 
+    @Column(nullable = false, updatable = false)
     private LocalDateTime attemptedAt = LocalDateTime.now();
 
-    protected MatchAttemptRecord() {}
-
-    public MatchAttemptRecord(Long initiatorStudentId, Long candidateStudentId,
-                              Long resultScoreId, Status status) {
-        this.initiatorStudentId = initiatorStudentId;
-        this.candidateStudentId = candidateStudentId;
-        this.resultScoreId = resultScoreId;
-        this.status = status;
-        this.attemptedAt = LocalDateTime.now();
-    }
-
-    public enum Status {
-        MATCHED,
-        NOT_COMPATIBLE,
-        PENDING_REVIEW
+    @PrePersist
+    protected void onCreate() {
+        attemptedAt = LocalDateTime.now();
     }
 }

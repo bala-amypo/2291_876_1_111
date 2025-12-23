@@ -1,39 +1,38 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "room_assignments")
+@Table(name = "room_assignment_records")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class RoomAssignmentRecord {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String roomNumber;
+
+    @Column(nullable = false)
     private Long studentAId;
+
+    @Column(nullable = false)
     private Long studentBId;
 
+    @Column(nullable = false, updatable = false)
     private LocalDateTime assignedAt = LocalDateTime.now();
 
-    @Enumerated(EnumType.STRING)
-    private Status status;
+    @Column(nullable = false)
+    private String status;
 
-    protected RoomAssignmentRecord() {}
-
-    public RoomAssignmentRecord(String roomNumber, Long studentAId,
-                                Long studentBId, Status status) {
-        this.roomNumber = roomNumber;
-        this.studentAId = studentAId;
-        this.studentBId = studentBId;
-        this.status = status;
-        this.assignedAt = LocalDateTime.now();
-    }
-
-    public enum Status {
-        ACTIVE,
-        COMPLETED,
-        CANCELLED
+    @PrePersist
+    protected void onCreate() {
+        assignedAt = LocalDateTime.now();
     }
 }
