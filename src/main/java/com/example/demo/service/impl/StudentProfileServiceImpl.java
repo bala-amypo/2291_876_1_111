@@ -5,12 +5,9 @@ import com.example.demo.repository.StudentProfileRepository;
 import com.example.demo.repository.UserAccountRepository;
 import com.example.demo.service.StudentProfileService;
 import com.example.demo.exception.ResourceNotFoundException;
-
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
-
 
 @Service
 public class StudentProfileServiceImpl implements StudentProfileService {
@@ -29,24 +26,27 @@ public class StudentProfileServiceImpl implements StudentProfileService {
         return studentRepo.save(profile);
     }
 
-   @Override
-public StudentProfile findByStudentId(String studentId) {
-    return studentRepo.findByStudentId(studentId)
-            .orElseThrow(() -> new ResourceNotFoundException("Student not found"));
-}
-
-
+    // ✅ REQUIRED BY INTERFACE
     @Override
-    public List<StudentProfile> getAllStudents() {
-        return studentRepo.findAll();
+    public StudentProfile getStudentById(Long id) {
+        return studentRepo.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Student not found"));
     }
 
+    // ✅ REQUIRED BY INTERFACE (String, NOT Long)
     @Override
-    public StudentProfile findByStudentId(Long studentId) {
+    public StudentProfile findByStudentId(String studentId) {
         return studentRepo.findByStudentId(studentId)
                 .orElseThrow(() -> new ResourceNotFoundException("Student not found"));
     }
 
+    // ✅ REQUIRED BY INTERFACE
+    @Override
+    public List<StudentProfile> getAllProfiles() {
+        return studentRepo.findAll();
+    }
+
+    // ✅ REQUIRED BY INTERFACE
     @Override
     public StudentProfile updateStudentStatus(Long id, boolean active) {
         StudentProfile profile = getStudentById(id);
