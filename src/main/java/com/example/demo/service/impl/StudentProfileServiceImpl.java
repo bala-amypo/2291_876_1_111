@@ -92,7 +92,7 @@ public StudentProfileServiceImpl(StudentProfileRepository studentRepo) {
 
     @Override
     public Optional<StudentProfile> getById(Long id) {
-        return studentProfileRepository.findById(id);
+        return studentRepo.findById(id);
     }
 
     

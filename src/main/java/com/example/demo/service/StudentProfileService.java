@@ -3,7 +3,7 @@ package com.example.demo.service;
 import com.example.demo.dto.StudentProfileDto;
 import com.example.demo.model.StudentProfile;
 
-import java.util.List;
+import java.util.*;
 
 public interface StudentProfileService {
 
@@ -33,4 +33,6 @@ public interface StudentProfileService {
 
     // Activate / deactivate student
     StudentProfile updateStudentStatus(Long id, boolean active);
+
+    Optional<StudentProfile> getById(Long id);
 }
