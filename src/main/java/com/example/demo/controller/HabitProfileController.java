@@ -26,28 +26,28 @@ public class HabitProfileController {
         return ResponseEntity.ok(habitProfileService.createOrUpdateHabit(habit));
     }
 
-    @PostMapping("/{studentId}")
-    @Operation(summary = "Create or update habit profile for student")
-    public ResponseEntity<HabitProfile> createOrUpdate(@PathVariable Long studentId, 
-                                                       @RequestBody HabitProfileDto dto) {
-        return ResponseEntity.ok(habitProfileService.createOrUpdate(studentId, dto));
-    }
+    // @PostMapping("/{studentId}")
+    // @Operation(summary = "Create or update habit profile for student")
+    // public ResponseEntity<HabitProfile> createOrUpdate(@PathVariable Long studentId, 
+    //                                                    @RequestBody HabitProfileDto dto) {
+    //     return ResponseEntity.ok(habitProfileService.createOrUpdate(studentId, dto));
+    // }
 
     @GetMapping("/student/{studentId}")
     @Operation(summary = "Get habit profile for student")
-    public ResponseEntity<HabitProfile> getForStudent(@PathVariable Long studentId) {
+    public ResponseEntity<HabitProfile> getByStudent(@PathVariable Long studentId) {
         return ResponseEntity.ok(habitProfileService.getForStudent(studentId));
     }
 
-    @GetMapping("/{id}")
-    @Operation(summary = "Get habit profile by ID")
-    public ResponseEntity<HabitProfile> getById(@PathVariable Long id) {
-        return ResponseEntity.ok(habitProfileService.getHabitById(id));
-    }
+    // @GetMapping("/{id}")
+    // @Operation(summary = "Get habit profile by ID")
+    // public ResponseEntity<HabitProfile> getById(@PathVariable Long id) {
+    //     return ResponseEntity.ok(habitProfileService.getHabitById(id));
+    // }
 
-    @GetMapping
-    @Operation(summary = "Get all habit profiles")
-    public ResponseEntity<List<HabitProfile>> getAll() {
-        return ResponseEntity.ok(habitProfileService.getAllHabitProfiles());
-    }
+    // @GetMapping
+    // @Operation(summary = "Get all habit profiles")
+    // public ResponseEntity<List<HabitProfile>> getAll() {
+    //     return ResponseEntity.ok(habitProfileService.getAllHabitProfiles());
+    // }
 }

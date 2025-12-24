@@ -68,4 +68,10 @@ public class MatchAttemptController {
                 matchAttemptService.getAllMatchAttempts()
         );
     }
+
+    @PostMapping("/log")
+        public MatchAttemptRecord log(@RequestBody MatchAttemptRecord record) {
+        return matchAttemptService.logMatchAttempt(record);
+        }
+
 }
