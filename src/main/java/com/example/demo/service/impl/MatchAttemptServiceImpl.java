@@ -12,6 +12,7 @@ import com.example.demo.service.MatchAttemptService;
 public class MatchAttemptServiceImpl implements MatchAttemptService {
 
     private final MatchAttemptRecordRepository attemptRepository;
+    
     private final CompatibilityScoreRecordRepository scoreRepository;
 
     public MatchAttemptServiceImpl(MatchAttemptRecordRepository attemptRepository,
