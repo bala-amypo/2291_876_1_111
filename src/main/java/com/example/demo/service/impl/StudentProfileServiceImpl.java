@@ -7,7 +7,6 @@ import com.example.demo.model.UserAccount;
 import com.example.demo.repository.StudentProfileRepository;
 import com.example.demo.repository.UserAccountRepository;
 import com.example.demo.service.StudentProfileService;
-
 import org.springframework.stereotype.Service;
 
 
