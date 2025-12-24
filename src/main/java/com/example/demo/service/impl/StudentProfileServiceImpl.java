@@ -88,11 +88,6 @@ public class StudentProfileServiceImpl implements StudentProfileService {
         return studentRepo.save(profile);
     }
 
-    @Override
-    public Optional<StudentProfile> getById(Long id) {
-        return studentRepo.findById(id);
-    }
-
     
 
 private void mapDtoToEntity(StudentProfileDto dto, StudentProfile profile) {
