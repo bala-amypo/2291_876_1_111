@@ -33,9 +33,9 @@ public class RoomAssignmentController {
     @PutMapping("/{id}/status")
     @Operation(summary = "Update room assignment status")
     public ResponseEntity<RoomAssignmentRecord> updateStatus(
-            @PathVariable Long id,
-            @RequestBody RoomAssignmentRecord.Status status
-    ) {
+        @PathVariable Long id,
+        @RequestBody String status
+    ){
         return ResponseEntity.ok(
                 roomAssignmentService.updateStatus(id, status)
         );

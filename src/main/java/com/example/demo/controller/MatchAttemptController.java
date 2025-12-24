@@ -34,7 +34,7 @@ public class MatchAttemptController {
     @Operation(summary = "Update attempt status")
     public ResponseEntity<MatchAttemptRecord> updateStatus(
             @PathVariable Long id,
-            @RequestBody MatchAttemptRecord.Status status
+            @RequestBody String status
     ) {
         return ResponseEntity.ok(
                 matchAttemptService.updateAttemptStatus(id, status)
