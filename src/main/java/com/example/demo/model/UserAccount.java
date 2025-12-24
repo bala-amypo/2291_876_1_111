@@ -2,9 +2,7 @@ package com.example.demo.model;
 
 import com.example.demo.security.Role;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Table(name = "user_accounts")
