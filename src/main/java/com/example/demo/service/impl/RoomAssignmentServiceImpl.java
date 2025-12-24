@@ -66,9 +66,10 @@ public class RoomAssignmentServiceImpl implements RoomAssignmentService {
     }
 
     @Override
-    public RoomAssignmentRecord updateStatus(Long id, RoomAssignmentRecord.Status status) {
+    public RoomAssignmentRecord updateStatus(Long id, String status) {
         RoomAssignmentRecord assignment = getAssignmentById(id);
-        assignment.setStatus(status);
+        assignment.setStatus(RoomAssignmentRecord.Status.valueOf(status));
         return assignmentRepository.save(assignment);
     }
+
 }
