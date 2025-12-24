@@ -10,3 +10,4 @@ public interface StudentProfileService {
     List<StudentProfile> getAllStudents();
     Optional<StudentProfile> findByStudentId(String studentId);
 }
+    
