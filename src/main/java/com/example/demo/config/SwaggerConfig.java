@@ -13,16 +13,16 @@ import java.util.List;
 public class SwaggerConfig {
 
     @Bean
-    public OpenAPI api() {
-        return new OpenAPI()
-                .info(new Info()
-                        .title("Hostel Roommate Compatibility Matcher API")
-                        .version("1.0") .servers(List.of(
-                        new Server()
-                                .url("https://9330.408procr.amypo.ai/")
-                                .description("Production Server")
-                ) );
-    }
+public OpenAPI api() {
+    return new OpenAPI()
+        .info(new Info()
+            .title("Hostel Roommate Compatibility Matcher API")
+            .version("1.0"))
+        .addServersItem(new io.swagger.v3.oas.models.servers.Server()
+            .url("/")
+            .description("Current Server"));
+}
+
 }
 
 
