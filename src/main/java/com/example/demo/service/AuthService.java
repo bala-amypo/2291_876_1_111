@@ -6,4 +6,5 @@ import com.example.demo.dto.AuthResponse;
 public interface AuthService {
     AuthResponse register(AuthRequest request);
     AuthResponse login(AuthRequest request);
+    String generateToken(String username);
 }
