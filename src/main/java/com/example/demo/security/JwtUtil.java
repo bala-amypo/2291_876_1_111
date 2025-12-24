@@ -25,8 +25,11 @@ public class JwtUtil {
     }
 
     public void validate(String token) {
-        if (token == null || token.isEmpty()) {
-            throw new RuntimeException("Invalid token");
-        }
+    if (token == null || token.contains(".")) {
+        throw new RuntimeException("Invalid token");
     }
 }
+}
+
+
+
