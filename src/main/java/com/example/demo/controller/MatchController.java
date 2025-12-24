@@ -1,42 +1,37 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.MatchResult;
-import com.example.demo.service.MatchService;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.http.ResponseEntity;
+import com.example.demo.model.CompatibilityScoreRecord;
+import com.example.demo.service.CompatibilityScoreService;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api/matches")
-@Tag(name = "Matches", description = "Compatibility matching")
 public class MatchController {
 
-    private final MatchService matchService;
+    private final CompatibilityScoreService service;
 
-    public MatchController(MatchService matchService) {
-        this.matchService = matchService;
+    public MatchController(CompatibilityScoreService service) {
+        this.service = service;
     }
 
     @PostMapping("/compute")
-    @Operation(summary = "Compute compatibility match between two students")
-    public ResponseEntity<MatchResult> computeMatch(@RequestBody Map<String, Long> request) {
-        Long studentAId = request.get("studentAId");
-        Long studentBId = request.get("studentBId");
-        return ResponseEntity.ok(matchService.computeMatch(studentAId, studentBId));
+    public ResponseEntity<CompatibilityScoreRecord> compute(
+            @RequestParam Long a,
+            @RequestParam Long b) {
+        return ResponseEntity.ok(service.computeScore(a, b));
     }
 
-    @GetMapping("/student/{studentId}")
-    @Operation(summary = "Get all matches for a student")
-    public ResponseEntity<List<MatchResult>> getMatchesForStudent(@PathVariable Long studentId) {
-        return ResponseEntity.ok(matchService.getMatchesFor(studentId));
+    @GetMapping("/student/{id}")
+    public ResponseEntity<List<CompatibilityScoreRecord>> byStudent(
+            @PathVariable Long id) {
+        return ResponseEntity.ok(service.getScoresForStudent(id));
     }
 
     @GetMapping("/{id}")
-    @Operation(summary = "Get match by ID")
-    public ResponseEntity<MatchResult> getMatch(@PathVariable Long id) {
-        return ResponseEntity.ok(matchService.getById(id));
+    public ResponseEntity<CompatibilityScoreRecord> byId(
+            @PathVariable Long id) {
+        return ResponseEntity.ok(service.getScoreById(id));
     }
 }
