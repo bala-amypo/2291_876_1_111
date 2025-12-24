@@ -15,10 +15,11 @@ import java.time.LocalDateTime;
 public class MatchAttemptRecord {
 
     public enum Status {
-        SUCCESS,
-        FAILED,
-        PENDING
-    }
+    MATCHED,
+    PENDING_REVIEW,
+    FAILED
+}
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

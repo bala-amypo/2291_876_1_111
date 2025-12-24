@@ -13,10 +13,10 @@ import java.time.LocalDateTime;
 public class RoomAssignmentRecord {
 
     public enum Status {
-        ASSIGNED,
-        CANCELLED,
-        PENDING
-    }
+    ACTIVE,
+    COMPLETED,
+    CANCELLED
+}
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
