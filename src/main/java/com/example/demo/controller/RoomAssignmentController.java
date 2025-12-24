@@ -73,14 +73,3 @@ public class RoomAssignmentController {
         );
     }
 }
-
-@PutMapping("/{id}/status")
-public ResponseEntity<RoomAssignmentRecord> updateStatus(
-        @PathVariable Long id,
-        @RequestBody Map<String, String> request
-) {
-    RoomAssignmentRecord.Status status =
-            RoomAssignmentRecord.Status.valueOf(request.get("status"));
-
-    return ResponseEntity.ok(roomAssignmentService.updateStatus(id, status));
-}
