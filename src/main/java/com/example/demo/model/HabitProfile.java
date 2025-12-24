@@ -1,11 +1,9 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
-import lombok.Data;
 import java.time.LocalDateTime;
 
 @Entity
-@Data
 public class HabitProfile {
 
     @Id
@@ -14,6 +12,7 @@ public class HabitProfile {
 
     private Long studentId;
     private Integer studyHoursPerDay;
+    private LocalDateTime updatedAt;
 
     @Enumerated(EnumType.STRING)
     private SleepSchedule sleepSchedule;
@@ -27,10 +26,10 @@ public class HabitProfile {
     @Enumerated(EnumType.STRING)
     private SocialPreference socialPreference;
 
-    private LocalDateTime updatedAt;
-
     public enum SleepSchedule { EARLY, REGULAR, LATE }
     public enum CleanlinessLevel { LOW, MEDIUM, HIGH }
     public enum NoiseTolerance { LOW, MEDIUM, HIGH }
     public enum SocialPreference { INTROVERT, BALANCED, EXTROVERT }
+
+    // getters and setters (or Lombok @Data if enabled)
 }
