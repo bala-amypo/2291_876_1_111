@@ -12,85 +12,36 @@ import java.util.*;
 @Service
 public class HabitProfileServiceImpl implements HabitProfileService {
 
-    private final HabitProfileRepository habitProfileRepository;
+    private final HabitProfileRepository repo;
 
-    public HabitProfileServiceImpl(HabitProfileRepository habitProfileRepository) {
-        this.habitProfileRepository = habitProfileRepository;
+    public HabitProfileServiceImpl(HabitProfileRepository repo) {
+        this.repo = repo;
     }
 
-    // 1️⃣ REQUIRED
-    @Override
-    public HabitProfile createOrUpdate(Long studentId, HabitProfileDto dto) {
-        HabitProfile habit = habitProfileRepository
-                .findByStudentId(studentId)
-                .orElse(new HabitProfile());
+    public HabitProfile createOrUpdateHabit(HabitProfile h) {
+        if (h.getStudyHoursPerDay() != null && h.getStudyHoursPerDay() < 0)
+            throw new IllegalArgumentException("study hours");
 
-        habit.setStudentId(studentId);
-        habit.setSmoking(dto.getSmoking());
-        habit.setDrinking(dto.getDrinking());
-        habit.setStudyHoursPerDay(dto.getStudyHoursPerDay());
+        HabitProfile existing = repo.findByStudentId(h.getStudentId()).orElse(null);
 
-        habit.setCleanlinessLevel(
-                HabitProfile.CleanlinessLevel.valueOf(dto.getCleanlinessLevel())
-        );
-        habit.setNoiseTolerance(
-                HabitProfile.NoiseTolerance.valueOf(dto.getNoiseTolerance())
-        );
-        habit.setSleepSchedule(
-                HabitProfile.SleepSchedule.valueOf(dto.getSleepSchedule())
-        );
-        habit.setSocialPreference(
-                HabitProfile.SocialPreference.valueOf(dto.getSocialPreference())
-        );
+        if (existing != null) {
+            h.setId(existing.getId());
+        }
 
-        habit.setSleepTime(dto.getSleepTime());
-        habit.setWakeTime(dto.getWakeTime());
-
-        return habitProfileRepository.save(habit);
+        h.setUpdatedAt(java.time.LocalDateTime.now());
+        return repo.save(h);
     }
 
-    // 2️⃣ REQUIRED
-    @Override
-    public HabitProfile createOrUpdateHabit(HabitProfile habit) {
-        return habitProfileRepository.save(habit);
+    public HabitProfile getHabitByStudent(Long id) {
+        return repo.findByStudentId(id)
+                .orElseThrow(() -> new RuntimeException("not found"));
     }
 
-    // 3️⃣ REQUIRED
-    @Override
-    public HabitProfile getForStudent(Long studentId) {
-        return habitProfileRepository.findByStudentId(studentId)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException("Habit profile not found for student")
-                );
+    public Optional<HabitProfile> getHabitById(Long id) {
+        return repo.findById(id);
     }
 
-    // 4️⃣ REQUIRED (YES, BOTH METHODS MUST EXIST)
-    @Override
-    public HabitProfile getHabitByStudent(Long studentId) {
-        return habitProfileRepository.findByStudentId(studentId)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException("Habit profile not found for student")
-                );
-    }
-
-    // 5️⃣ REQUIRED
-    @Override
     public List<HabitProfile> getAllHabitProfiles() {
-        return habitProfileRepository.findAll();
+        return repo.findAll();
     }
-
-    // 6️⃣ REQUIRED
-    @Override
-    public HabitProfile getHabitById(Long id) {
-        return habitProfileRepository.findById(id)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException("Habit profile not found")
-                );
-    }
-
-    @Override
-    public Optional<HabitProfile> getByStudentId(Long studentId) {
-        return habitProfileRepository.findByStudentId(studentId);
-    }
-
 }

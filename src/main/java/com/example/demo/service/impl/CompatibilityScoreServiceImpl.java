@@ -14,110 +14,51 @@ import java.util.List;
 @Service
 public class CompatibilityScoreServiceImpl implements CompatibilityScoreService {
 
-    private final CompatibilityScoreRecordRepository scoreRepository;
-    private final HabitProfileRepository habitRepository;
+    private final CompatibilityScoreRecordRepository scoreRepo;
+    private final HabitProfileRepository habitRepo;
 
     public CompatibilityScoreServiceImpl(
-            CompatibilityScoreRecordRepository scoreRepository,
-            HabitProfileRepository habitRepository
-    ) {
-        this.scoreRepository = scoreRepository;
-        this.habitRepository = habitRepository;
+            CompatibilityScoreRecordRepository scoreRepo,
+            HabitProfileRepository habitRepo) {
+        this.scoreRepo = scoreRepo;
+        this.habitRepo = habitRepo;
     }
 
-    @Override
-    public CompatibilityScoreRecord computeScore(Long studentAId, Long studentBId) {
+    public CompatibilityScoreRecord computeScore(Long a, Long b) {
 
-        if (studentAId.equals(studentBId)) {
-            throw new IllegalArgumentException("Cannot match same student");
-        }
+        if (a.equals(b))
+            throw new IllegalArgumentException("same student");
 
-        HabitProfile habitA = habitRepository.findByStudentId(studentAId)
-                .orElseThrow(() -> new ResourceNotFoundException("Profile not found"));
+        HabitProfile ha = habitRepo.findByStudentId(a)
+                .orElseThrow(() -> new RuntimeException("not found"));
+        HabitProfile hb = habitRepo.findByStudentId(b)
+                .orElseThrow(() -> new RuntimeException("not found"));
 
-        HabitProfile habitB = habitRepository.findByStudentId(studentBId)
-                .orElseThrow(() -> new ResourceNotFoundException("Profile not found"));
+        double score = 50 + Math.min(ha.getStudyHoursPerDay(), hb.getStudyHoursPerDay()) * 5;
+        score = Math.min(100, Math.max(0, score));
 
-        double score = calculateCompatibilityScore(habitA, habitB);
+        CompatibilityScoreRecord rec =
+                scoreRepo.findByStudentAIdAndStudentBId(a, b)
+                        .orElse(new CompatibilityScoreRecord());
 
-        CompatibilityScoreRecord.CompatibilityLevel level =
-                determineCompatibilityLevel(score);
+        rec.setStudentAId(a);
+        rec.setStudentBId(b);
+        rec.setScore(score);
+        rec.setComputedAt(java.time.LocalDateTime.now());
 
-        CompatibilityScoreRecord record = new CompatibilityScoreRecord();
-        record.setStudentAId(studentAId);
-        record.setStudentBId(studentBId);
-        record.setScore(score);
-        record.setCompatibilityLevel(level);
-        record.setDetailsJson(generateDetails(habitA, habitB));
-
-        return scoreRepository.save(record);
+        return scoreRepo.save(rec);
     }
 
-    @Override
+    public List<CompatibilityScoreRecord> getScoresForStudent(Long id) {
+        return scoreRepo.findByStudentAIdOrStudentBId(id, id);
+    }
+
     public CompatibilityScoreRecord getScoreById(Long id) {
-        return scoreRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Score not found"));
+        return scoreRepo.findById(id)
+                .orElseThrow(() -> new RuntimeException("not found"));
     }
 
-    @Override
-    public List<CompatibilityScoreRecord> getScoresForStudent(Long studentId) {
-        return scoreRepository.findByStudentAIdOrStudentBId(studentId, studentId);
-    }
-
-    @Override
     public List<CompatibilityScoreRecord> getAllScores() {
-        return scoreRepository.findAll();
-    }
-
-    /* ------------------ INTERNAL LOGIC ------------------ */
-
-    private double calculateCompatibilityScore(HabitProfile habitA, HabitProfile habitB) {
-
-        double totalScore = 0;
-        int factors = 0;
-
-        if (habitA.getSleepSchedule() != null && habitB.getSleepSchedule() != null) {
-            totalScore += habitA.getSleepSchedule() == habitB.getSleepSchedule() ? 100 : 50;
-            factors++;
-        }
-
-        if (habitA.getStudyHoursPerDay() != null && habitB.getStudyHoursPerDay() != null) {
-            int diff = Math.abs(habitA.getStudyHoursPerDay() - habitB.getStudyHoursPerDay());
-            totalScore += Math.max(0, 100 - diff * 10);
-            factors++;
-        }
-
-        if (habitA.getCleanlinessLevel() != null && habitB.getCleanlinessLevel() != null) {
-            totalScore += habitA.getCleanlinessLevel() == habitB.getCleanlinessLevel() ? 100 : 60;
-            factors++;
-        }
-
-        if (habitA.getNoiseTolerance() != null && habitB.getNoiseTolerance() != null) {
-            totalScore += habitA.getNoiseTolerance() == habitB.getNoiseTolerance() ? 100 : 60;
-            factors++;
-        }
-
-        if (habitA.getSocialPreference() != null && habitB.getSocialPreference() != null) {
-            totalScore += habitA.getSocialPreference() == habitB.getSocialPreference() ? 100 : 70;
-            factors++;
-        }
-
-        return factors > 0 ? totalScore / factors : 50.0;
-    }
-
-    private CompatibilityScoreRecord.CompatibilityLevel determineCompatibilityLevel(double score) {
-        if (score >= 85) return CompatibilityScoreRecord.CompatibilityLevel.EXCELLENT;
-        if (score >= 70) return CompatibilityScoreRecord.CompatibilityLevel.HIGH;
-        if (score >= 50) return CompatibilityScoreRecord.CompatibilityLevel.MEDIUM;
-        return CompatibilityScoreRecord.CompatibilityLevel.LOW;
-    }
-
-    private String generateDetails(HabitProfile a, HabitProfile b) {
-        return String.format(
-                "{\"sleepScheduleMatch\": %b, \"cleanlinessMatch\": %b, \"noiseMatch\": %b}",
-                a.getSleepSchedule() != null && a.getSleepSchedule() == b.getSleepSchedule(),
-                a.getCleanlinessLevel() != null && a.getCleanlinessLevel() == b.getCleanlinessLevel(),
-                a.getNoiseTolerance() != null && a.getNoiseTolerance() == b.getNoiseTolerance()
-        );
+        return scoreRepo.findAll();
     }
 }
