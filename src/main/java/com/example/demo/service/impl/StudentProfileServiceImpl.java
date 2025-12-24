@@ -86,6 +86,12 @@ public StudentProfileServiceImpl(StudentProfileRepository studentRepo) {
         profile.setActive(active);
         return studentRepo.save(profile);
     }
+
+    @
+    public Optional<StudentProfile> getById(Long id) {
+        return studentProfileRepository.findById(id);
+    }
+
 private void mapDtoToEntity(StudentProfileDto dto, StudentProfile profile) {
     if (dto.getStudentId() != null)
         profile.setStudentId(String.valueOf(dto.getStudentId()));
