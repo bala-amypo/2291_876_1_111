@@ -12,7 +12,7 @@ import java.util.List;
 public class SwaggerConfig {
 
     @Bean
-    public OpenAPI customOpenAPI() {
+    public OpenAPI api() {
         return new OpenAPI()
                 .info(new Info()
                         .title("Hostel Roommate Compatibility Matcher")
