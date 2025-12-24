@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/match-attempts")
@@ -35,13 +34,8 @@ public class MatchAttemptController {
     @Operation(summary = "Update attempt status")
     public ResponseEntity<MatchAttemptRecord> updateStatus(
             @PathVariable Long id,
-            @RequestBody Map<String, String> request
+            @RequestBody MatchAttemptRecord.Status status
     ) {
-        MatchAttemptRecord.Status status =
-                MatchAttemptRecord.Status.valueOf(
-                        request.get("status").toUpperCase()
-                );
-
         return ResponseEntity.ok(
                 matchAttemptService.updateAttemptStatus(id, status)
         );

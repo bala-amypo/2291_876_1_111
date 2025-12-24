@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/room-assignments")
@@ -26,20 +25,17 @@ public class RoomAssignmentController {
     public ResponseEntity<RoomAssignmentRecord> assignRoom(
             @RequestBody RoomAssignmentRecord assignment
     ) {
-        return ResponseEntity.ok(roomAssignmentService.assignRoom(assignment));
+        return ResponseEntity.ok(
+                roomAssignmentService.assignRoom(assignment)
+        );
     }
 
     @PutMapping("/{id}/status")
     @Operation(summary = "Update room assignment status")
     public ResponseEntity<RoomAssignmentRecord> updateStatus(
             @PathVariable Long id,
-            @RequestBody Map<String, String> request
+            @RequestBody RoomAssignmentRecord.Status status
     ) {
-        RoomAssignmentRecord.Status status =
-                RoomAssignmentRecord.Status.valueOf(
-                        request.get("status").toUpperCase()
-                );
-
         return ResponseEntity.ok(
                 roomAssignmentService.updateStatus(id, status)
         );
