@@ -17,11 +17,7 @@ public class AuthServiceImpl implements AuthService {
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
 
-    public AuthServiceImpl(UserAccountRepository userAccountRepository, 
-                          PasswordEncoder passwordEncoder, 
-                          JwtUtil jwtUtil) {
-        this.userAccountRepository = userAccountRepository;
-        this.passwordEncoder = passwordEncoder;
+    public AuthServiceImpl(JwtUtil jwtUtil) {
         this.jwtUtil = jwtUtil;
     }
 
@@ -56,5 +52,9 @@ public class AuthServiceImpl implements AuthService {
         String token = jwtUtil.generateToken(user.getEmail(), user.getRole().name(), user.getId());
 
         return new AuthResponse(token, user.getId(), user.getEmail(), user.getRole().name());
+    }
+     @Override
+    public String generateToken(String username) {
+        return jwtUtil.generateToken(username);
     }
 }
