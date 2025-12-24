@@ -6,6 +6,8 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface RoomAssignmentRecordRepository extends JpaRepository<RoomAssignmentRecord, Long> {
-    List<RoomAssignmentRecord> findByStudentAIdOrStudentBId(Long id1, Long id2);
+public interface RoomAssignmentRecordRepository
+        extends JpaRepository<RoomAssignmentRecord, Long> {
+
+    List<RoomAssignmentRecord> findByStudentAIdOrStudentBId(Long a, Long b);
 }
