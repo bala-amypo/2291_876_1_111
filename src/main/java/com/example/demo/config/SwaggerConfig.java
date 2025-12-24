@@ -17,6 +17,13 @@ public class SwaggerConfig {
         return new OpenAPI()
                 .info(new Info()
                         .title("Hostel Roommate Compatibility Matcher API")
-                        .version("1.0") );
+                        .version("1.0") .servers(List.of(
+                        new Server()
+                                .url("https://9330.408procr.amypo.ai/")
+                                .description("Production Server")
+                ) );
     }
 }
+
+
+
