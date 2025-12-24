@@ -14,6 +14,5 @@ public interface MatchAttemptService {
 
     List<MatchAttemptRecord> getAllMatchAttempts();
 
-    // ✅ ADD THIS
     MatchAttemptRecord getAttemptById(Long id);
 }
