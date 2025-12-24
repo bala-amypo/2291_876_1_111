@@ -23,6 +23,9 @@ public StudentProfileServiceImpl(StudentProfileRepository studentRepo) {
     this.userRepo = null;
 }
 
+
+
+
     public StudentProfileServiceImpl(StudentProfileRepository studentRepo,
                                      UserAccountRepository userRepo) {
         this.studentRepo = studentRepo;
@@ -91,6 +94,8 @@ public StudentProfileServiceImpl(StudentProfileRepository studentRepo) {
     public Optional<StudentProfile> getById(Long id) {
         return studentProfileRepository.findById(id);
     }
+
+    
 
 private void mapDtoToEntity(StudentProfileDto dto, StudentProfile profile) {
     if (dto.getStudentId() != null)
