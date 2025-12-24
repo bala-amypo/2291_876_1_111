@@ -15,7 +15,7 @@ public class SwaggerConfig {
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
                 .info(new Info()
-                        .title("Supplier Diversity Tracker")
+                        .title("Hostel Roommate Compatibility Matcher")
                         .version("1.0")
                         .description("API documentation for AmyPO test cases")
                 )
