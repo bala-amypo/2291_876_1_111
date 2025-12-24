@@ -22,7 +22,7 @@ public class StudentProfileController {
 
     @PostMapping
     @Operation(summary = "Create student profile")
-    public ResponseEntity<StudentProfile> createProfile(@RequestBody StudentProfileDto dto, 
+    public ResponseEntity<StudentProfile> create(@RequestBody StudentProfileDto dto, 
                                                         @RequestParam Long userId) {
         return ResponseEntity.ok(studentProfileService.createProfile(dto, userId));
     }
