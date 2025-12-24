@@ -1,25 +1,12 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
-import lombok.*;
-
+import lombok.Data;
 import java.time.LocalDateTime;
 
-
 @Entity
-@Table(name = "compatibility_score_records")
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class CompatibilityScoreRecord {
-
-    public enum CompatibilityLevel {
-    LOW,
-    MEDIUM,
-    HIGH,
-    EXCELLENT
-}
-                    
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,11 +19,12 @@ public class CompatibilityScoreRecord {
     @Enumerated(EnumType.STRING)
     private CompatibilityLevel compatibilityLevel;
 
-    private String detailsJson;
     private LocalDateTime computedAt;
 
-    @PrePersist
-    void onCreate() {
-        computedAt = LocalDateTime.now();
+    @Column(columnDefinition = "TEXT")
+    private String detailsJson;
+
+    public enum CompatibilityLevel {
+        LOW, MEDIUM, HIGH, EXCELLENT
     }
 }

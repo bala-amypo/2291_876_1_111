@@ -1,24 +1,11 @@
-
 package com.example.demo.model;
 
 import jakarta.persistence.*;
-import lombok.*;
-
-import java.time.LocalDateTime;
+import lombok.Data;
 
 @Entity
-@Table(name = "match_attempt_records")
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class MatchAttemptRecord {
-
-    public enum Status {
-    MATCHED,
-    PENDING_REVIEW,
-    FAILED
-}
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,10 +18,8 @@ public class MatchAttemptRecord {
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    private LocalDateTime attemptedAt;
-
-    @PrePersist
-    void onCreate() {
-        attemptedAt = LocalDateTime.now();
+    public enum Status {
+        PENDING_REVIEW,
+        MATCHED
     }
 }

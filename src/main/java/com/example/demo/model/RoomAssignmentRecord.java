@@ -1,21 +1,11 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Data;
 
-import java.time.LocalDateTime;
 @Entity
-@Table(name = "room_assignment_records")
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class RoomAssignmentRecord {
-
-    public enum Status {
-    ACTIVE,
-    COMPLETED,
-    CANCELLED
-}
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,10 +18,8 @@ public class RoomAssignmentRecord {
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    private LocalDateTime assignedAt;
-
-    @PrePersist
-    void onCreate() {
-        assignedAt = LocalDateTime.now();
+    public enum Status {
+        ACTIVE,
+        COMPLETED
     }
 }
