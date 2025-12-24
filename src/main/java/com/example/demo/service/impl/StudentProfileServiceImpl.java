@@ -87,7 +87,7 @@ public StudentProfileServiceImpl(StudentProfileRepository studentRepo) {
         return studentRepo.save(profile);
     }
 
-    @
+    @Override
     public Optional<StudentProfile> getById(Long id) {
         return studentProfileRepository.findById(id);
     }
