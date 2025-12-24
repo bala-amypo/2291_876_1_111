@@ -9,7 +9,6 @@ import com.example.demo.repository.UserAccountRepository;
 import com.example.demo.service.StudentProfileService;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
 
 import java.util.List;
 
@@ -90,7 +89,7 @@ public StudentProfileServiceImpl(StudentProfileRepository studentRepo) {
         profile.setActive(active);
         return studentRepo.save(profile);
     }
-    
+
     @Override
     public Optional<StudentProfile> getById(Long id) {
         return studentProfileRepository.findById(id);
