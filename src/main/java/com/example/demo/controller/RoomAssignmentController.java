@@ -68,4 +68,10 @@ public class RoomAssignmentController {
                 roomAssignmentService.getAllAssignments()
         );
     }
+
+    @PostMapping("/assign")
+    public RoomAssignmentRecord assign(@RequestBody RoomAssignmentRecord record) {
+        return roomAssignmentService.assignRoom(record);
+    }
+
 }

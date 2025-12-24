@@ -58,6 +58,12 @@ public class StudentProfileServiceImpl implements StudentProfileService {
                 .orElseThrow(() -> new ResourceNotFoundException("Student not found"));
     }
 
+    @Override
+    public Optional<StudentProfile> getById(Long id) {
+        return studentRepo.findById(id);
+    }
+
+
     // 🔥 THIS METHOD WAS MISSING / WRONG
     @Override
     public List<StudentProfile> getAllStudents() {
