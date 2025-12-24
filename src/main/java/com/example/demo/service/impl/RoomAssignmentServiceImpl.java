@@ -40,9 +40,11 @@ public class RoomAssignmentServiceImpl implements RoomAssignmentService {
         }
 
         // Default status if not set
+        // Default status if not set
         if (assignment.getStatus() == null) {
-            assignment.setStatus(RoomAssignmentRecord.Status.ASSIGNED);
+            assignment.setStatus(RoomAssignmentRecord.Status.ACTIVE);
         }
+
 
         return assignmentRepository.save(assignment);
     }
