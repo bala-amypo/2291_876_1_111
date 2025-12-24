@@ -31,5 +31,81 @@ public class HabitProfile {
     public enum NoiseTolerance { LOW, MEDIUM, HIGH }
     public enum SocialPreference { INTROVERT, BALANCED, EXTROVERT }
 
-    // getters and setters (or Lombok @Data if enabled)
+    public HabitProfile() {
+    }
+
+    public HabitProfile(Long studentId, Integer studyHoursPerDay, SleepSchedule sleepSchedule, 
+                        CleanlinessLevel cleanlinessLevel, NoiseTolerance noiseTolerance, 
+                        SocialPreference socialPreference) {
+        this.studentId = studentId;
+        this.studyHoursPerDay = studyHoursPerDay;
+        this.sleepSchedule = sleepSchedule;
+        this.cleanlinessLevel = cleanlinessLevel;
+        this.noiseTolerance = noiseTolerance;
+        this.socialPreference = socialPreference;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getStudentId() {
+        return studentId;
+    }
+
+    public void setStudentId(Long studentId) {
+        this.studentId = studentId;
+    }
+
+    public Integer getStudyHoursPerDay() {
+        return studyHoursPerDay;
+    }
+
+    public void setStudyHoursPerDay(Integer studyHoursPerDay) {
+        this.studyHoursPerDay = studyHoursPerDay;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public SleepSchedule getSleepSchedule() {
+        return sleepSchedule;
+    }
+
+    public void setSleepSchedule(SleepSchedule sleepSchedule) {
+        this.sleepSchedule = sleepSchedule;
+    }
+
+    public CleanlinessLevel getCleanlinessLevel() {
+        return cleanlinessLevel;
+    }
+
+    public void setCleanlinessLevel(CleanlinessLevel cleanlinessLevel) {
+        this.cleanlinessLevel = cleanlinessLevel;
+    }
+
+    public NoiseTolerance getNoiseTolerance() {
+        return noiseTolerance;
+    }
+
+    public void setNoiseTolerance(NoiseTolerance noiseTolerance) {
+        this.noiseTolerance = noiseTolerance;
+    }
+
+    public SocialPreference getSocialPreference() {
+        return socialPreference;
+    }
+
+    public void setSocialPreference(SocialPreference socialPreference) {
+        this.socialPreference = socialPreference;
+    }
 }
