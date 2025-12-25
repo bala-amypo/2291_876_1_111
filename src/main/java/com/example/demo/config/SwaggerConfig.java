@@ -21,7 +21,7 @@ public class SwaggerConfig {
                 )
                 .servers(List.of(
                         // 👉 base URL for Swagger
-                        new Server().url("http://9180.32procr.amypo.ai/")
+                        new Server().url("https://9180.32procr.amypo.ai/")
                 ));
     }
 }
