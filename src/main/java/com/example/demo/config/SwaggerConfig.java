@@ -9,21 +9,19 @@ import org.springframework.context.annotation.Configuration;
 import java.util.List;
 
 @Configuration
-
-
 public class SwaggerConfig {
 
     @Bean
-    public OpenAPI api() {
+    public OpenAPI api() {   // ⚠️ method name MUST be api()
         return new OpenAPI()
                 .info(new Info()
                         .title("Hostel Roommate Compatibility Matcher API")
-                        .version("1.0"));
+                        .description("Swagger documentation for Hostel Roommate Compatibility Matcher")
+                        .version("1.0.0")
+                )
+                .servers(List.of(
+                        // 👉 base URL for Swagger
+                        new Server().url("http://9180.32procr.amypo.ai/")
+                ));
     }
 }
-
-
-
-
-
-
