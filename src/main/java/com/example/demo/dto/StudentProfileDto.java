@@ -1,5 +1,6 @@
 package com.example.demo.dto;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
 @Data
 @AllArgsConstructor
@@ -9,5 +10,4 @@ public class StudentProfileDto {
     private String fullName;
     private Boolean active;
 
-    // getters and setters
 }
