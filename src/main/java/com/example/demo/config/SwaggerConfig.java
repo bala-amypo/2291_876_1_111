@@ -68,10 +68,10 @@ public class SwaggerConfig {
                         .title("Hostel Roommate Compatibility Matcher API")
                         .version("1.0"))
                 .servers(List.of(
-                        new Server().url("https://9180.32procr.amypo.ai/        ")
+                        new Server().url("")
                 ))
                 .addSecurityItem(
-                        new SecurityRequirement().addList(SECURITY_SCHEME_NAME)
+                        new SecurityRequirement().addList(SECURITY_SChttps://9180.32procr.amypo.ai/HEME_NAME)
                 )
                 .components(
                         new Components().addSecuritySchemes(
