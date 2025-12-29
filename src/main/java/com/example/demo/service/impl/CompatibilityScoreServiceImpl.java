@@ -35,7 +35,7 @@ public class CompatibilityScoreServiceImpl implements CompatibilityScoreService 
         HabitProfile hb = habitRepo.findByStudentId(b)
                 .orElseThrow(() -> new RuntimeException("not found"));
 
-        // 🔢 Score calculation (unchanged)
+    
         double score = 50 + Math.min(
                 ha.getStudyHoursPerDay(),
                 hb.getStudyHoursPerDay()
@@ -52,10 +52,9 @@ public class CompatibilityScoreServiceImpl implements CompatibilityScoreService 
         rec.setScore(score);
         rec.setComputedAt(LocalDateTime.now());
 
-        // ✅ FIX 1: Set compatibility level
+    
         rec.setCompatibilityLevel(determineLevel(score));
 
-        // ✅ FIX 2: Set detailsJson (simple + safe)
         rec.setDetailsJson(
                 String.format(
                         "{\"studentAStudyHours\":%d,\"studentBStudyHours\":%d}",
