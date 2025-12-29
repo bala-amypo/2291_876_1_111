@@ -14,8 +14,6 @@ public class StudentProfile {
     private String fullName;
     private Boolean active = true;
 
-    // ===== getters & setters =====
-
     public Long getId() {
         return id;
     }
