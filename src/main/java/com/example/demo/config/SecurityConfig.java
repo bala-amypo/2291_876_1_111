@@ -19,32 +19,43 @@ public class SecurityConfig {
 
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
-        public SecurityConfig(JwtAuthenticationFilter jwtAuthenticationFilter) {
-                this.jwtAuthenticationFilter = jwtAuthenticationFilter;
-                    }
+    public SecurityConfig(JwtAuthenticationFilter jwtAuthenticationFilter) {
+        this.jwtAuthenticationFilter = jwtAuthenticationFilter;
+    }
 
-                        @Bean
-                            public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-                                    http
-                                                    .csrf(csrf -> csrf.disable())
-                                                                    .authorizeHttpRequests(auth -> auth
-                                                                                            .requestMatchers("/auth/**", "/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html").permitAll()
-                                                                                                                    .requestMatchers("/api/**").authenticated()
-                                                                                                                                            .anyRequest().permitAll()
-                                                                                                                                                            )
-                                                                                                                                                                            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                                                                                                                                                                                            .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+            .csrf(csrf -> csrf.disable())
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers(
+                    "/auth/**",
+                    "/swagger-ui/**",
+                    "/v3/api-docs/**",
+                    "/swagger-ui.html"
+                ).permitAll()
+                .requestMatchers("/api/**").authenticated()
+                .anyRequest().permitAll()
+            )
+            .sessionManagement(session ->
+                session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            )
+            .addFilterBefore(
+                jwtAuthenticationFilter,
+                UsernamePasswordAuthenticationFilter.class
+            );
 
-                                                                                                                                                                                                    return http.build();
-                                                                                                                                                                                                        }
+        return http.build();
+    }
 
-                                                                                                                                                                                                            @Bean
-                                                                                                                                                                                                                public PasswordEncoder passwordEncoder() {
-                                                                                                                                                                                                                        return new BCryptPasswordEncoder();
-                                                                                                                                                                                                                            }
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
-                                                                                                                                                                                                                                @Bean
-                                                                                                                                                                                                                                    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
-                                                                                                                                                                                                                                            return config.getAuthenticationManager();
-                                                                                                                                                                                                                                                }
-                                                                                                                                                                                                                                                }
+    @Bean
+    public AuthenticationManager authenticationManager(
+            AuthenticationConfiguration config) throws Exception {
+        return config.getAuthenticationManager();
+    }
+}
